@@ -5,9 +5,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
 import modeles.Comments;
+
+import misc.TurnInto;
 import modeles.Post;
 
 
@@ -34,19 +42,12 @@ public class Reader {
 		
 	}
 	
+
 	public Date toDate(String S) {
 		Date date=null;
 		return date;
 	}
 	
-	public Post toPost(String[] S) {
-		Post date=null;
-		return date;
-	}
-	public Comments toComment(String[] S) {
-		Comments date=null;
-		return date;
-	}
 	
 	public void makeInput() throws IOException {
 		InputStream fluxPosts=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/posts.dat"); 
@@ -67,7 +68,7 @@ public class Reader {
 				motsPosts = read(buffPosts);				
 			}
 			else {
-				Comments C = toComment(motsComments);
+				//Comments C = toComment(motsComments);
 				// Méthode pour envoyer le commentaire dans la chaine principale
 				//send(C);
 				motsComments = read(buffComments);
@@ -78,7 +79,13 @@ public class Reader {
 		
 		buffPosts.close();
 		buffComments.close();
-		
+	}	
+
+	
+	public static Post toPost(String[] mots) {
+		Timestamp t = TurnInto.timeStamp(mots[0]);
+		return new Post(t,Integer.valueOf(mots[1]),mots[4],10);
+
 	}
 	
 	

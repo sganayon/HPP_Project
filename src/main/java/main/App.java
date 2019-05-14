@@ -11,6 +11,7 @@ import Reader.Reader;
 public class App {
 
 	public static void main(String[] args) {
+
 		Reader R = new Reader();
 		try {
 			R.makeInput();
@@ -18,6 +19,7 @@ public class App {
 			
 			e.printStackTrace();
 		}
+
 		
 	}
 	
