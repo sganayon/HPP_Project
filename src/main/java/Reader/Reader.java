@@ -5,7 +5,12 @@ import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
+import misc.TurnInto;
 import modeles.Post;
 
 
@@ -34,9 +39,9 @@ public class Reader {
 		
 	}
 	
+	
 	public static Post toPost(String[] mots) {
-		Timestamp t;
-		
-		return null;
+		Timestamp t = TurnInto.timeStamp(mots[0]);
+		return new Post(t,Integer.valueOf(mots[1]),mots[4],10);
 	}
 }
