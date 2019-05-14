@@ -11,6 +11,7 @@ public class Post {
 	private int score;
 	private List<Comments> comments = new ArrayList<Comments>();
 	
+	
 	public Post(Timestamp time, int id, String user, int score) {
 		super();
 		this.time = time;
