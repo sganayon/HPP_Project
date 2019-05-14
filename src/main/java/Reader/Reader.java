@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
 
 import modeles.Post;
 
@@ -32,9 +33,10 @@ public class Reader {
 			}
 		
 	}
-	public static void toPost(String[] mots) {
+	
+	public static Post toPost(String[] mots) {
+		Timestamp t;
 		
-		
-		
+		return null;
 	}
 }
