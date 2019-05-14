@@ -3,21 +3,21 @@ package modeles;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Post {
 	private Timestamp time;
 	private int id;
 	private String user;
-	private int score;
+	private int score =10;
 	private List<Comments> comments = new ArrayList<Comments>();
 	
 	
-	public Post(Timestamp time, int id, String user, int score) {
+	public Post(Timestamp time, int id, String user) {
 		super();
 		this.time = time;
 		this.id = id;
 		this.user = user;
-		this.score = score;
 	}
 	@Override
 	public String toString() {
@@ -26,26 +26,14 @@ public class Post {
 	public Timestamp getTime() {
 		return time;
 	}
-	public void setTime(Timestamp time) {
-		this.time = time;
-	}
 	public int getId() {
 		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getUser() {
 		return user;
 	}
-	public void setUser(String user) {
-		this.user = user;
-	}
 	public int getScore() {
 		return score;
-	}
-	public void setScore(int score) {
-		this.score = score;
 	}
 	
 	//ajoute un nouveau commentaire
@@ -54,7 +42,30 @@ public class Post {
 	}
 	
 	//supprime le commentaire tombé à 0
-	public void removeDeadComment(int indexe) {
-		this.comments.remove(indexe);
+	public void removeDeadComment() {
+		//filtre tout les commentaire ayant un score null
+		List<Comments> toRemove = comments.stream().filter(c-> c.getScore()==0).collect(Collectors.toList());
+		comments.removeAll(toRemove);
+	}
+	
+	public void updateScore(Timestamp t) {
+		//si le score est null pas besoin de le calculer de nouveau
+		if(score ==0) {return;}
+		
+		//calcule le score des commentaires
+		int subScore = 0;
+		comments.forEach(c->updateScore(t));
+		
+		//Supprimme les commentaires ancient et calcule le score
+		removeDeadComment();
+		subScore = comments.stream().mapToInt(c->getScore()).sum();
+		
+		//obtient la difference en miliseconde des deux date et divise pour avoir la difference en jours
+		int dayElapsed = (int) ((t.getTime() - time.getTime())/(24 * 60 * 60 * 1000));
+		score = 10-dayElapsed + subScore;
+		
+		if(score <0) {
+			score = 0;
+		}
 	}
 }
