@@ -10,6 +10,7 @@ public class Post {
 	private int id;
 	private String user;
 	private int score =10;
+	private int nbCommenteers=0;
 	private List<Comments> comments = new ArrayList<Comments>();
 	
 	
@@ -34,6 +35,9 @@ public class Post {
 	}
 	public int getScore() {
 		return score;
+	}
+	public int getNbCommenteers() {
+		return (int) comments.stream().mapToInt(c->c.getUserId()).distinct().count();
 	}
 	
 	//ajoute un nouveau commentaire

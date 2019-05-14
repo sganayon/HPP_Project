@@ -6,14 +6,16 @@ public class Comments {
 	private Timestamp time;
 	private int id;
 	private int score = 10;
+	private int userId;
 	@Override
 	public String toString() {
-		return "Comments [time=" + time + ", id=" + id + ", score=" + score + "]";
+		return "Comments [time=" + time + ", id=" + id + ", score=" + score + ", userId=" + userId + "]";
 	}
-	public Comments(Timestamp time, int id) {
+	public Comments(Timestamp time, int id, int userId) {
 		super();
 		this.time = time;
 		this.id = id;
+		this.userId = userId;
 	}
 	public Timestamp getTime() {
 		return time;
@@ -23,6 +25,9 @@ public class Comments {
 	}
 	public int getScore() {
 		return score;
+	}
+	public int getUserId() {
+		return userId;
 	}
 	
 	public void updateScore(Timestamp t) {
