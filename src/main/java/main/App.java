@@ -12,7 +12,7 @@ public class App {
 	public static void main(String[] args) {
 		
 		try{
-			InputStream flux=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/posts.dat"); 
+			InputStream flux=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/comments.dat"); 
 			InputStreamReader lecture=new InputStreamReader(flux);
 			BufferedReader buff=new BufferedReader(lecture);
 			String ligne;			
@@ -20,13 +20,13 @@ public class App {
 			System.out.println(ligne);
 			String[] mots = ligne.split("\\|");
 			for (int i=0;i<mots.length;i++) {
-				Reader.toPost(mots);
+				Reader.toComment(mots);
 			}
 			buff.close();
 			
 			}					
 			catch (Exception e){
-			//System.out.println(e.toString());
+				e.printStackTrace();
 			
 			}
 		
