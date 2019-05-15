@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modeles.Comments;
+import modeles.Entree;
 import modeles.Post;
 
 public class Data {
@@ -13,7 +14,7 @@ public class Data {
 		return posts;
 	}
 	
-	public static void addData(Object o) {
+	public static void addData(Entree o) {
 		if(o instanceof Post) {
 			Post p = (Post) o;
 			posts.add(p);
