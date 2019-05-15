@@ -114,5 +114,60 @@ public class Reader {
 		return new Post(t,Integer.valueOf(mots[1]),mots[4]);
 	}
 	
+	public static void makeInput(String Post, String Comment){
+		InputStream fluxPosts = null;
+		try {
+			fluxPosts = new FileInputStream(Post);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		InputStreamReader lecturePosts=new InputStreamReader(fluxPosts);
+		BufferedReader buffPosts=new BufferedReader(lecturePosts);
+		
+		InputStream fluxComments = null;
+		try {
+			fluxComments = new FileInputStream(Comment);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+		InputStreamReader lectureComments=new InputStreamReader(fluxComments);
+		BufferedReader buffComments=new BufferedReader(lectureComments);
+		String[] motsPosts = read(buffPosts);
+		String[] motsComments = read(buffComments);
+		do {
+			if (TurnInto.timeStamp(motsPosts[0]).before(TurnInto.timeStamp(motsComments[0]))) {
+				Post P = toPost(motsPosts);
+				// M�thode pour envoyer le post dans la chaine principale
+				Data.addData(P);
+				motsPosts = read(buffPosts);				
+			}
+			else {
+				Comments C = toComment(motsComments);
+				// M�thode pour envoyer le commentaire dans la chaine principale
+				Data.addData(C);
+				motsComments = read(buffComments);
+			}
+			
+		//}
+		}while(motsPosts!=null&&motsComments!=null);
+		
+		try {
+			buffPosts.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			buffComments.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		System.out.println("Done");
+	}	
+
+	
 	
 }
