@@ -21,17 +21,20 @@ import modeles.Post;
 
 public class Reader {
 	
-	public Reader() {
+	private Entree input;
+	
+	public Reader(Entree input) {
+		this.input = input;
 		
 	}
 	public String[] read(BufferedReader buff) {
 		try{
 			String ligne;			
 			ligne=buff.readLine();
-			System.out.println(ligne);
+			//System.out.println(ligne);
 			String[] mots = ligne.split("\\|");
 			for (int i=0;i<mots.length;i++) {
-				System.out.println(mots[i]);
+				//System.out.println(mots[i]);
 			}			
 			return mots;
 			}					
@@ -42,28 +45,23 @@ public class Reader {
 		
 	}
 	
-
-	public Date toDate(String S) {
-		Date date=null;
-		return date;
-	}
 	
 	
 	public void makeInput() throws IOException {
-		InputStream fluxPosts=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/posts.dat"); 
+		InputStream fluxPosts=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/dataDebs/posts.dat"); 
 		InputStreamReader lecturePosts=new InputStreamReader(fluxPosts);
 		BufferedReader buffPosts=new BufferedReader(lecturePosts);
-		InputStream fluxComments=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/posts.dat"); 
+		InputStream fluxComments=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/dataDebs/comments.dat"); 
 		InputStreamReader lectureComments=new InputStreamReader(fluxComments);
 		BufferedReader buffComments=new BufferedReader(lectureComments);
 		String[] motsPosts = read(buffPosts);
 		String[] motsComments = read(buffComments);
-		//do {
-		for(int i=0;i<10;i++) {
-			if (toDate(motsPosts[0]).before(toDate(motsComments[0]))) {
+		do {
+		//for(int i=0;i<10;i++) {
+			if (TurnInto.timeStamp(motsPosts[0]).before(TurnInto.timeStamp(motsComments[0]))) {
 				Post P = toPost(motsPosts);
 				// Méthode pour envoyer le post dans la chaine principale
-				//send(P);
+				//input
 				
 				motsPosts = read(buffPosts);				
 			}
@@ -74,11 +72,12 @@ public class Reader {
 				motsComments = read(buffComments);
 			}
 			
-		}
-		//}while(motsPosts!=null&&motsComments!=null);
+		//}
+		}while(motsPosts!=null&&motsComments!=null);
 		
 		buffPosts.close();
 		buffComments.close();
+		System.out.println("Done");
 	}	
 
 	

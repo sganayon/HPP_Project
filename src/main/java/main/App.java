@@ -11,7 +11,7 @@ import Reader.Reader;
 public class App {
 
 	public static void main(String[] args) {
-
+		long start = System.currentTimeMillis();
 		Reader R = new Reader();
 		try {
 			R.makeInput();
@@ -19,8 +19,8 @@ public class App {
 			
 			e.printStackTrace();
 		}
-
-		
+		long end = System.currentTimeMillis()-start;
+		System.out.println(end);
 	}
 	
 
