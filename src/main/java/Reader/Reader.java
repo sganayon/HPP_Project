@@ -76,7 +76,7 @@ public class Reader {
 		BufferedReader buffComments=new BufferedReader(lectureComments);
 		String[] motsPosts = read(buffPosts);
 		String[] motsComments = read(buffComments);
-		do {
+		while(motsPosts!=null&&motsComments!=null){
 			if (TurnInto.timeStamp(motsPosts[0]).before(TurnInto.timeStamp(motsComments[0]))) {
 				Post P = toPost(motsPosts);
 				// Mï¿½thode pour envoyer le post dans la chaine principale
@@ -91,7 +91,7 @@ public class Reader {
 			}
 			
 		//}
-		}while(motsPosts!=null&&motsComments!=null);
+		}
 		
 		if(motsPosts==null) {
 			while(motsComments!=null) {
@@ -180,7 +180,7 @@ public class Reader {
 		else {
 			while(motsPosts!=null) {
 				Post P = toPost(motsPosts);
-				// Mï¿½thode pour envoyer le post dans la chaine principale
+				// Méthode pour envoyer le post dans la chaine principale
 				Data.addData(P);
 				motsPosts = read(buffPosts);
 			}

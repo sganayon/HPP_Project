@@ -8,6 +8,7 @@ import modeles.Entree;
 import modeles.Post;
 
 public class Data {
+	
 	private static List<Post> posts = new ArrayList<Post>();
 	
 	public static List<Post> getData(){
@@ -20,6 +21,7 @@ public class Data {
 			posts.add(p);
 			posts.forEach(po->po.updateScore(p.getTime()));
 		}
+		
 		else if(o instanceof Comments){
 			Comments c = (Comments) o;
 			for(Post p : posts) {

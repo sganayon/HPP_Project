@@ -20,6 +20,9 @@ public class Post extends Entree {
 		this.id = id;
 		this.user = user;
 	}
+	public void setScore(int score) {
+		this.score = score;
+	}
 	@Override
 	public String toString() {
 		return "Post [time=" + time + ", id=" + id + ", user=" + user + ", score=" + score + "]";
@@ -35,6 +38,9 @@ public class Post extends Entree {
 	}
 	public int getScore() {
 		return score;
+	}
+	public void setNbCommenteers(int nbCommenteers) {
+		this.nbCommenteers = nbCommenteers;
 	}
 	public int getNbCommenteers() {
 		return (int) comments.stream().mapToInt(c->c.getUserId()).distinct().count();
@@ -58,7 +64,10 @@ public class Post extends Entree {
 		
 		//calcule le score des commentaires
 		int subScore = 0;
-		comments.forEach(c->updateScore(t));
+		//comments.forEach(c->updateScore(t));
+		for (Comments c:comments) {
+			c.updateScore(t);
+		}
 		
 		//Supprimme les commentaires ancient et calcule le score
 		removeDeadComment();
