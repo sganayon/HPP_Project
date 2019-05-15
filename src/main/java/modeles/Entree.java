@@ -6,11 +6,7 @@ public class Entree {
 
 
 	public Entree() {
-		
+				
 	}
-
-	
-	
-	
 	
 }

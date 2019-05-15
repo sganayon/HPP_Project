@@ -2,7 +2,7 @@ package modeles;
 
 import java.sql.Timestamp;
 
-public class Comments {
+public class Comments extends Entree {
 	private Timestamp time;
 	private int id;
 	private int score = 10;
