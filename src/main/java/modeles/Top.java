@@ -109,6 +109,7 @@ public class Top {
 			}
 		}
 		
+		top.clear();
 		top.add(best);
 		top.add(best2);
 		top.add(best3);
@@ -116,43 +117,6 @@ public class Top {
 	}
 	
 	
-	public void output(ArrayList<Top> top) 
-	{
-		List<String> output = new ArrayList<String>();
-		Timestamp t;
-		if (top.get(0).getTS().after(top.get(1).getTS()))
-		{
-			if (top.get(0).getTS().after(top.get(2).getTS()))
-				t=top.get(0).getTS();
-			else
-				t=top.get(0).getTS();
-		}
-		else
-		{
-			if (top.get(1).getTS().after(top.get(2).getTS()))
-				t=top.get(1).getTS();
-			else
-				t=top.get(2).getTS();
-		}
-		output.add(t.toString()+",");
-		for (Top p : top)
-		{
-			output.add(p.getPostID().toString()+",");
-			output.add(p.getUserID()+",");
-			output.add(p.getScore().toString()+",");
-			output.add(p.getNbCommenters().toString()+",");	
-		}
-		
-		try {
-			Path fichier = Paths.get("output.txt");
-			Path fichierglobal = Paths.get("outputglobal.txt");
-			Files.write(fichier, output, Charset.forName("UTF-8"));
-			Files.write(fichierglobal, output, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
-
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-	}
+	
 	
 }
