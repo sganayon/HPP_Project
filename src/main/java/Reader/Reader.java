@@ -93,6 +93,22 @@ public class Reader {
 		//}
 		}while(motsPosts!=null&&motsComments!=null);
 		
+		if(motsPosts==null) {
+			while(motsComments!=null) {
+				Comments C = toComment(motsComments);
+				// M�thode pour envoyer le commentaire dans la chaine principale
+				Data.addData(C);
+				motsComments = read(buffComments);
+			}
+		}
+		else {
+			while(motsPosts!=null) {
+				Post P = toPost(motsPosts);
+				// M�thode pour envoyer le post dans la chaine principale
+				Data.addData(P);
+				motsPosts = read(buffPosts);
+			}
+		}
 		try {
 			buffPosts.close();
 		} catch (IOException e) {
@@ -152,6 +168,23 @@ public class Reader {
 			
 		//}
 		}while(motsPosts!=null&&motsComments!=null);
+		
+		if(motsPosts==null) {
+			while(motsComments!=null) {
+				Comments C = toComment(motsComments);
+				// M�thode pour envoyer le commentaire dans la chaine principale
+				Data.addData(C);
+				motsComments = read(buffComments);
+			}
+		}
+		else {
+			while(motsPosts!=null) {
+				Post P = toPost(motsPosts);
+				// M�thode pour envoyer le post dans la chaine principale
+				Data.addData(P);
+				motsPosts = read(buffPosts);
+			}
+		}
 		
 		try {
 			buffPosts.close();
