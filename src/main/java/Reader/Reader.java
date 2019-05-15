@@ -16,6 +16,7 @@ import java.util.Date;
 import modeles.Comments;
 
 import misc.TurnInto;
+import modeles.Comments;
 import modeles.Post;
 
 
@@ -29,6 +30,9 @@ public class Reader {
 	}
 	public String[] read(BufferedReader buff) {
 		try{
+			InputStream flux=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/comments.dat"); 
+			InputStreamReader lecture=new InputStreamReader(flux);
+			BufferedReader buff=new BufferedReader(lecture);
 			String ligne;			
 			ligne=buff.readLine();
 			//System.out.println(ligne);
@@ -45,6 +49,12 @@ public class Reader {
 		
 	}
 	
+	public static Comments toComment(String[] mots) {
+		Timestamp t = TurnInto.timeStamp(mots[0]);
+		int repId = (mots[5].isEmpty())?-1:Integer.valueOf(mots[5]);
+		int postId = (mots[6].isEmpty())?-1:Integer.valueOf(mots[6]);
+		return new Comments(t,Integer.valueOf(mots[1]),Integer.valueOf(mots[2]), repId, postId);
+	}
 	
 	
 	public void makeInput() throws IOException {
@@ -83,8 +93,10 @@ public class Reader {
 	
 	public static Post toPost(String[] mots) {
 		Timestamp t = TurnInto.timeStamp(mots[0]);
-		return new Post(t,Integer.valueOf(mots[1]),mots[4],10);
 
+		return new Post(t,Integer.valueOf(mots[1]),mots[4]);
+
+		return new Post(t,Integer.valueOf(mots[1]),mots[4]);
 	}
 	
 	
