@@ -15,6 +15,7 @@ import java.util.Date;
 
 import modeles.Comments;
 import modeles.Entree;
+import misc.Data;
 import misc.TurnInto;
 import modeles.Comments;
 import modeles.Post;
@@ -23,7 +24,6 @@ import modeles.Post;
 public class Reader {
 	
 	public Reader() {
-		//this.input = input;
 		
 	}
 	public String[] read(BufferedReader buff) {
@@ -63,18 +63,16 @@ public class Reader {
 		String[] motsPosts = read(buffPosts);
 		String[] motsComments = read(buffComments);
 		do {
-		//for(int i=0;i<10;i++) {
 			if (TurnInto.timeStamp(motsPosts[0]).before(TurnInto.timeStamp(motsComments[0]))) {
 				Post P = toPost(motsPosts);
 				// M�thode pour envoyer le post dans la chaine principale
-				
-				
+				Data.addData(P);
 				motsPosts = read(buffPosts);				
 			}
 			else {
-				//Comments C = toComment(motsComments);
+				Comments C = toComment(motsComments);
 				// M�thode pour envoyer le commentaire dans la chaine principale
-				//send(C);
+				Data.addData(C);
 				motsComments = read(buffComments);
 			}
 			
