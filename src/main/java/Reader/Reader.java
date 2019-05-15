@@ -15,6 +15,7 @@ import java.util.Date;
 
 import modeles.Comments;
 import modeles.Entree;
+import misc.Data;
 import misc.TurnInto;
 import modeles.Comments;
 import modeles.Post;
@@ -69,14 +70,14 @@ public class Reader {
 			if (TurnInto.timeStamp(motsPosts[0]).before(TurnInto.timeStamp(motsComments[0]))) {
 				Post P = toPost(motsPosts);
 				// Méthode pour envoyer le post dans la chaine principale
-				
+				Data.addData(P);
 				
 				motsPosts = read(buffPosts);				
 			}
 			else {
-				//Comments C = toComment(motsComments);
+				Comments C = toComment(motsComments);
 				// Méthode pour envoyer le commentaire dans la chaine principale
-				//send(C);
+				Data.addData(C);
 				motsComments = read(buffComments);
 			}
 			
@@ -93,8 +94,6 @@ public class Reader {
 		Timestamp t = TurnInto.timeStamp(mots[0]);
 
 		return new Post(t,Integer.valueOf(mots[1]),mots[4]);
-
-		//return new Post(t,Integer.valueOf(mots[1]),mots[4]);
 	}
 	
 	
