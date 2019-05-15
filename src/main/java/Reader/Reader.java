@@ -2,6 +2,7 @@ package Reader;
 
 import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -26,7 +27,7 @@ public class Reader {
 	public Reader() {
 		
 	}
-	public String[] read(BufferedReader buff) {
+	public static String[] read(BufferedReader buff) {
 		try{
 		
 			String ligne;			
@@ -53,11 +54,24 @@ public class Reader {
 	}
 	
 	
-	public void makeInput() throws IOException {
-		InputStream fluxPosts=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/dataDebs/posts.dat"); 
+	public static void makeInput(){
+		InputStream fluxPosts = null;
+		try {
+			fluxPosts = new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/dataDebs/posts.dat");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		InputStreamReader lecturePosts=new InputStreamReader(fluxPosts);
 		BufferedReader buffPosts=new BufferedReader(lecturePosts);
-		InputStream fluxComments=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/dataDebs/comments.dat"); 
+		
+		InputStream fluxComments = null;
+		try {
+			fluxComments = new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/dataDebs/comments.dat");
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		InputStreamReader lectureComments=new InputStreamReader(fluxComments);
 		BufferedReader buffComments=new BufferedReader(lectureComments);
 		String[] motsPosts = read(buffPosts);
@@ -79,8 +93,18 @@ public class Reader {
 		//}
 		}while(motsPosts!=null&&motsComments!=null);
 		
-		buffPosts.close();
-		buffComments.close();
+		try {
+			buffPosts.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			buffComments.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		System.out.println("Done");
 	}	
 
