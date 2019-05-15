@@ -22,8 +22,6 @@ import modeles.Post;
 
 public class Reader {
 	
-	private Entree input;
-	
 	public Reader() {
 		//this.input = input;
 		
@@ -68,14 +66,14 @@ public class Reader {
 		//for(int i=0;i<10;i++) {
 			if (TurnInto.timeStamp(motsPosts[0]).before(TurnInto.timeStamp(motsComments[0]))) {
 				Post P = toPost(motsPosts);
-				// Méthode pour envoyer le post dans la chaine principale
+				// Mï¿½thode pour envoyer le post dans la chaine principale
 				
 				
 				motsPosts = read(buffPosts);				
 			}
 			else {
 				//Comments C = toComment(motsComments);
-				// Méthode pour envoyer le commentaire dans la chaine principale
+				// Mï¿½thode pour envoyer le commentaire dans la chaine principale
 				//send(C);
 				motsComments = read(buffComments);
 			}
@@ -91,10 +89,7 @@ public class Reader {
 	
 	public static Post toPost(String[] mots) {
 		Timestamp t = TurnInto.timeStamp(mots[0]);
-
 		return new Post(t,Integer.valueOf(mots[1]),mots[4]);
-
-		//return new Post(t,Integer.valueOf(mots[1]),mots[4]);
 	}
 	
 	
