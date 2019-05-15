@@ -14,7 +14,7 @@ import java.util.Date;
 
 
 import modeles.Comments;
-
+import modeles.Entree;
 import misc.TurnInto;
 import modeles.Comments;
 import modeles.Post;
@@ -24,15 +24,13 @@ public class Reader {
 	
 	private Entree input;
 	
-	public Reader(Entree input) {
-		this.input = input;
+	public Reader() {
+		//this.input = input;
 		
 	}
 	public String[] read(BufferedReader buff) {
 		try{
-			InputStream flux=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/comments.dat"); 
-			InputStreamReader lecture=new InputStreamReader(flux);
-			BufferedReader buff=new BufferedReader(lecture);
+		
 			String ligne;			
 			ligne=buff.readLine();
 			//System.out.println(ligne);
@@ -71,7 +69,7 @@ public class Reader {
 			if (TurnInto.timeStamp(motsPosts[0]).before(TurnInto.timeStamp(motsComments[0]))) {
 				Post P = toPost(motsPosts);
 				// Méthode pour envoyer le post dans la chaine principale
-				//input
+				
 				
 				motsPosts = read(buffPosts);				
 			}
@@ -96,7 +94,7 @@ public class Reader {
 
 		return new Post(t,Integer.valueOf(mots[1]),mots[4]);
 
-		return new Post(t,Integer.valueOf(mots[1]),mots[4]);
+		//return new Post(t,Integer.valueOf(mots[1]),mots[4]);
 	}
 	
 	

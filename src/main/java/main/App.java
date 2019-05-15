@@ -18,31 +18,27 @@ public class App {
 			R.makeInput();
 		} catch (IOException e) {
 
-		
-		try{
-			InputStream flux=new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/comments.dat"); 
-			InputStreamReader lecture=new InputStreamReader(flux);
-			BufferedReader buff=new BufferedReader(lecture);
-			String ligne;			
-			ligne=buff.readLine();
-			System.out.println(ligne);
-			String[] mots = ligne.split("\\|");
-			for (int i=0;i<mots.length;i++) {
-				Reader.toComment(mots);
-			}
-			buff.close();
+			try {
+				InputStream flux = new FileInputStream(System.getProperty("user.home")
+						+ "\\Local Settings\\Application Data" + "/HPP_Project/comments.dat");
+				InputStreamReader lecture = new InputStreamReader(flux);
+				BufferedReader buff = new BufferedReader(lecture);
+				String ligne;
+				ligne = buff.readLine();
+				System.out.println(ligne);
+				String[] mots = ligne.split("\\|");
+				for (int i = 0; i < mots.length; i++) {
+					Reader.toComment(mots);
+				}
+				buff.close();
 
-			e.printStackTrace();
-		}
-		
-
-			}					
-			catch (Exception e){
 				e.printStackTrace();
-			
-			}
-		long end = System.currentTimeMillis()-start;
-		System.out.println(end);
-	}
+			} catch (Exception e2) {
+				e.printStackTrace();
 
+			}
+			long end = System.currentTimeMillis() - start;
+			System.out.println(end);
+		}
+	}
 }
