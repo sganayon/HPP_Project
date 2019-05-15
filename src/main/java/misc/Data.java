@@ -19,7 +19,9 @@ public class Data {
 		if(o instanceof Post) {
 			Post p = (Post) o;
 			posts.add(p);
+			System.out.println("add post of "+p.getUser());
 			posts.forEach(po->po.updateScore(p.getTime()));
+			
 		}
 		
 		else if(o instanceof Comments){
@@ -27,8 +29,10 @@ public class Data {
 			for(Post p : posts) {
 				if(p.getId() == c.getPostId()) {
 					p.addComment(c);
+					System.out.println("add comment to "+p.getUser());
 				}
 				p.updateScore(c.getTime());
+				System.out.println("new score of post from "+p.getUser()+" : "+p.getScore() );
 			}
 		}
 	}

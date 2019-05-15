@@ -57,7 +57,7 @@ public class Reader {
 	public static void makeInput(){
 		InputStream fluxPosts = null;
 		try {
-			fluxPosts = new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/dataDebs/posts.dat");
+			fluxPosts = new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/Tests/Q1Basic2/posts.dat");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -67,7 +67,7 @@ public class Reader {
 		
 		InputStream fluxComments = null;
 		try {
-			fluxComments = new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/dataDebs/comments.dat");
+			fluxComments = new FileInputStream(System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/Tests/Q1Basic2/comments.dat");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
