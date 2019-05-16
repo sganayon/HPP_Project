@@ -10,7 +10,6 @@ public class Post extends Entree {
 	private int id;
 	private String user;
 	private int score =10;
-	private int nbCommenteers=0;
 	private List<Comments> comments = new ArrayList<Comments>();
 	
 	
@@ -19,9 +18,6 @@ public class Post extends Entree {
 		this.time = time;
 		this.id = id;
 		this.user = user;
-	}
-	public void setScore(int score) {
-		this.score = score;
 	}
 	@Override
 	public String toString() {
@@ -38,9 +34,6 @@ public class Post extends Entree {
 	}
 	public int getScore() {
 		return score;
-	}
-	public void setNbCommenteers(int nbCommenteers) {
-		this.nbCommenteers = nbCommenteers;
 	}
 	public int getNbCommenteers() {
 		return (int) comments.stream().mapToInt(c->c.getUserId()).distinct().count();
