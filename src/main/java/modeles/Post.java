@@ -71,16 +71,14 @@ public class Post extends Entree {
 		
 		//Supprimme les commentaires ancient et calcule le score
 		removeDeadComment();
-		subScore = comments.stream().mapToInt(c->getScore()).sum();
-		System.out.println("subscore of post of "+user+" : "+subScore);
+		subScore = comments.stream().mapToInt(c->c.getScore()).sum();
 		
 		//obtient la difference en miliseconde des deux date et divise pour avoir la difference en jours
 		int dayElapsed = (int) ((t.getTime() - time.getTime())/(24 * 60 * 60 * 1000));
 		score = 10-dayElapsed + subScore;
-		System.out.println("score of post of "+user+" : "+ score);
-		
 		if(score <0) {
 			score = 0;
 		}
+		System.out.println("score of post of "+user+" : "+ score);
 	}
 }
