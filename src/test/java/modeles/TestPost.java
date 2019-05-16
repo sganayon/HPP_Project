@@ -27,5 +27,15 @@ public class TestPost extends TestCase {
 		p2.updateScore(t3);
 		assertEquals(9, p1.getScore());
 		assertEquals(20, p2.getScore());
+		
+		
+		Timestamp t4 = TurnInto.timeStamp("2010-02-15T04:05:24.777+0000");
+		Comments c2 = new Comments(t4,1,1,-1,1);
+		p1.addComment(c2);
+		p1.updateScore(t4);
+		p2.updateScore(t4);
+		assertEquals(14, p1.getScore());
+		assertEquals(10, p2.getScore());
+		
 	}
 }
