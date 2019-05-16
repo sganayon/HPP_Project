@@ -53,19 +53,19 @@ public class TestApp {
 		test(Const.Q1Case4);
 	}
 	
-	@Test
+	@Test //fail
 	public void testQ1Case5() {
 		test(Const.Q1Case5);
 	}
-	@Test
+	@Test //fail
 	public void testQ1CommentCount() {
 		test(Const.Q1CommentCount);
 	}
-	@Test
+	@Test //fail
 	public void testQ1PostExpiredComment() {
 		test(Const.Q1PostExpiredComment);
 	}
-	@Test
+	@Test //fail
 	public void testQ1PostExpiredComment2() {
 		test(Const.Q1PostExpiredComment2);
 	}
