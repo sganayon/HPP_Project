@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class Post extends Entree {
+public class Post extends Entree implements Comparable<Post>{
 	private Timestamp time;
 	private int id;
 	private String user;
@@ -37,6 +37,10 @@ public class Post extends Entree {
 	}
 	public int getNbCommenteers() {
 		return (int) comments.stream().mapToInt(c->c.getUserId()).distinct().count();
+	}
+	
+	public List<Comments> getComments(){
+		return comments;
 	}
 	
 	//ajoute un nouveau commentaire
@@ -74,4 +78,28 @@ public class Post extends Entree {
 		}
 		System.out.println("score of post of "+user+" : "+ score);
 	}
+	@Override
+	public int compareTo(Post o) {
+		if(this.score <= o.score) {
+			if(this.score < o.score) {
+				return -1;
+			}else {
+				if(this.time.before(o.time)) {
+					return -1;
+				}else if(this.time.after(o.time)){
+					return 1;
+				}else {
+					if(this.comments.get(this.comments.size()-1).getTime().before(o.comments.get(this.comments.size()-1).getTime())) {
+						return -1;
+					}else {
+						return 1;
+					}
+				}
+			}
+		}else {
+			return 1;
+		}
+	}
+	
+	
 }

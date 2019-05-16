@@ -1,5 +1,7 @@
-package Output;
+package writer;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -10,51 +12,74 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import misc.Data;
 import modeles.Post;
-import modeles.Top;
+import reader.Reader;
 
 public class Output {
-	private ArrayList<Top> top3=new ArrayList<Top>(3);
-	
-	
-	Output(ArrayList<Post> p){
-		Top.createTop(p, top3);
+	private static List<Post> top=new ArrayList<Post>(3);
+	private static File f = new File("output.txt");
+
+	Output(){
+		
 	}
 	
+	public static void checkTopChanged(List<Post> top3Post) {
+		if(top.size() != top3Post.size()) {
+			top = top3Post;
+			write();
+		}else {
+			for(int i=0;i<top.size();i++) {
+				if(top.get(i).getId() != top3Post.get(i).getId()) {
+					top = top3Post;
+					write();
+					break;
+				}
+			}
+		}
+	}
 	
-	public void write() 
+	public static void write() 
 	{
-		List<String> output = new ArrayList<String>();
-		Timestamp t;
-		if (top3.get(0).getTS().after(top3.get(1).getTS()))
+		StringBuilder output = new StringBuilder();
+		Timestamp t = Data.getLastUpdate();
+		
+		output.append(t.toString().replace(" ", "T")+"+0000");
+		for (Post p : top)
 		{
-			if (top3.get(0).getTS().after(top3.get(2).getTS()))
-				t=top3.get(0).getTS();
-			else
-				t=top3.get(0).getTS();
+			output.append(","+String.valueOf(p.getId()));
+			output.append(","+p.getUser());
+			output.append(","+String.valueOf(p.getScore()));
+			output.append(","+String.valueOf(p.getNbCommenteers()));	
 		}
-		else
-		{
-			if (top3.get(1).getTS().after(top3.get(2).getTS()))
-				t=top3.get(1).getTS();
-			else
-				t=top3.get(2).getTS();
+		if(top.size() != 3) {
+			for(int i=0;i<3-top.size();i++) {
+				output.append(",-");
+				output.append(",-");
+				output.append(",-");
+				output.append(",-");
+			}
 		}
-		output.add(t.toString()+",");
-		for (Top p : top3)
-		{
-			output.add(p.getPostID().toString()+",");
-			output.add(p.getUserID()+",");
-			output.add(p.getScore().toString()+",");
-			output.add(p.getNbCommenters().toString()+",");	
-		}
+		output.append("\r\n");
 		
 		try {
-			Path fichier = Paths.get("output.txt");
-			Path fichierglobal = Paths.get("outputglobal.txt");
-			Files.write(fichier, output, Charset.forName("UTF-8"));
-			Files.write(fichierglobal, output, Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+			Path fichierglobal = Paths.get("output.txt");
+//			Files.write(fichierglobal,output.toString().getBytes(), Charset.forName("UTF-8"), StandardOpenOption.APPEND);
+//			BufferedWriter buff = Files.newBufferedWriter(f.toPath(), StandardOpenOption.APPEND);
+			Files.write(fichierglobal, output.toString().getBytes(), StandardOpenOption.APPEND);
 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+
+	public static void clearOutput() {
+		if(f.exists()) {
+			f.delete();
+		}
+		try {
+			f.createNewFile();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
