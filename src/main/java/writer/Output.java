@@ -64,8 +64,6 @@ public class Output {
 		
 		try {
 			Path fichierglobal = Paths.get("output.txt");
-//			Files.write(fichierglobal,output.toString().getBytes(), Charset.forName("UTF-8"), StandardOpenOption.APPEND);
-//			BufferedWriter buff = Files.newBufferedWriter(f.toPath(), StandardOpenOption.APPEND);
 			Files.write(fichierglobal, output.toString().getBytes(), StandardOpenOption.APPEND);
 
 		} catch (IOException e) {

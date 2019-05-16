@@ -1,12 +1,15 @@
 package main;
 
-import Reader.Reader;
+import reader.Reader;
+import writer.Output;
 
 public class App {
 
 	public static void main(String[] args) {
 		
-		Reader.makeInput("C:/Users/Cliquetgos/Desktop/Travail/Telecom/Projet HPP/Tests/Q1Basic/posts.dat","C:/Users/Cliquetgos/Desktop/Travail/Telecom/Projet HPP/Tests/Q1Basic/comments.dat");
+		Output.clearOutput();
+		
+		Reader.makeInput("Tests\\Q1BigTest\\posts.dat","Tests\\Q1BigTest\\comments.dat");
 		
 	}
 }
