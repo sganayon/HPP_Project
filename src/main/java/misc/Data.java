@@ -59,10 +59,10 @@ public class Data {
 		List<Post> top3 = new ArrayList<Post>(3);
 		
 		Collections.sort(posts);
+		Collections.reverse(posts);
 		int max = (3>posts.size())?posts.size():3;
 		
 		top3.addAll(posts.subList(0, max));
-		Collections.reverse(top3);
 		return top3;
 	}
 
