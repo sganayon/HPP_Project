@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 
 import modeles.Comments;
 import modeles.Entree;
@@ -12,8 +13,8 @@ import writer.Output;
 
 public class Data {
 	
-	private static List<Post> posts = new ArrayList<Post>();
-	private static Timestamp lastUpdate =null;
+	private static List<Post> posts = new Vector<Post>();
+	private static Timestamp lastUpdate = null;
 	
 	public static List<Post> getData(){
 		return posts;
@@ -56,7 +57,7 @@ public class Data {
 	}
 	
 	public static List<Post> getTopScore() {
-		List<Post> top3 = new ArrayList<Post>(3);
+		List<Post> top3 = new Vector<Post>(3);
 		
 		Collections.sort(posts);
 		Collections.reverse(posts);
