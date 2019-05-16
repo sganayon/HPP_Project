@@ -1,4 +1,4 @@
-package Reader;
+package reader;
 
 import static org.junit.Assert.*;
 
