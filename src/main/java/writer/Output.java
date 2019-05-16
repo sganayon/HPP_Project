@@ -12,16 +12,21 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
+import misc.Const;
 import misc.Data;
 import modeles.Post;
 import reader.Reader;
 
 public class Output {
 	private static List<Post> top=new ArrayList<Post>(3);
-	private static File f = new File("output.txt");
+	private static File f = null;
 
 	Output(){
 		
+	}
+	
+	public static void setFile(String path) {
+		f = new File(path+"output.txt");
 	}
 	
 	public static void checkTopChanged(List<Post> top3Post) {
@@ -63,7 +68,7 @@ public class Output {
 		output.append("\r\n");
 		
 		try {
-			Path fichierglobal = Paths.get("output.txt");
+			Path fichierglobal = f. toPath();
 			Files.write(fichierglobal, output.toString().getBytes(), StandardOpenOption.APPEND);
 
 		} catch (IOException e) {

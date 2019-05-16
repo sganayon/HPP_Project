@@ -8,10 +8,12 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import org.junit.Test;
 
+import misc.Const;
 import misc.Data;
 import misc.TurnInto;
 import modeles.Comments;
@@ -24,7 +26,7 @@ public class TestReader {
 	public void testRead() {
 		InputStream fluxComments = null;
 		try {
-			fluxComments = new FileInputStream(Reader.PATH+"Tests/Q1Basic/posts.dat");
+			fluxComments = new FileInputStream(Const.Q1Basic+"posts.dat");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -73,7 +75,9 @@ public class TestReader {
 		A.add(P1);
 		A.add(P2);
 		A.add(P3);
-		Reader.makeInput("Tests/Q1Basic2/posts.dat","Tests/Q1Basic2/comments.dat");
+		Collections.sort(A);
+		Collections.reverse(A);
+		Reader.makeInput(Const.Q1Basic2);
 		assertEquals(Data.getData().size(),A.size());
 		assertEquals(Data.getData().get(0).getId(), A.get(0).getId());
 		assertEquals(Data.getData().get(0).getScore(), A.get(0).getScore());

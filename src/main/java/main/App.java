@@ -1,5 +1,6 @@
 package main;
 
+import misc.Const;
 import reader.Reader;
 import writer.Output;
 
@@ -7,9 +8,10 @@ public class App {
 
 	public static void main(String[] args) {
 		
+		Output.setFile(Const.Q1Basic);
 		Output.clearOutput();
 		
-		Reader.makeInput("Tests\\Q1BigTest\\posts.dat","Tests\\Q1BigTest\\comments.dat");
+		Reader.makeInput(Const.Q1Basic);
 		
 	}
 }

@@ -17,6 +17,7 @@ import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.Warmup;
 
+import misc.Const;
 import reader.Reader;
 
 @State(Scope.Benchmark)
@@ -46,7 +47,7 @@ public class BenchmarkNaive {
     @Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
     @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
     public void testMethod() {
-    	Reader.makeInput(postsFile,commentsFile);
+    	Reader.makeInput(Const.Q1BigTest);
     }
     
     /**

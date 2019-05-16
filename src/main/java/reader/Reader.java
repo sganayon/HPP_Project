@@ -23,7 +23,6 @@ import modeles.Post;
 
 
 public class Reader {
-	public static final String PATH = System.getProperty("user.home") + "\\Local Settings\\Application Data" + "/HPP_Project/";
 	private static InputStream fluxPosts = null;
 	private static InputStream fluxComments = null;
 	private static InputStreamReader ReaderPosts = null;
@@ -53,19 +52,19 @@ public class Reader {
 	
 	/**
 	 * open all flux, create streamReader, bufferedRead
-	 * @param postPath the path to the posts file
-	 * @param commentPath the path to the comments file
+	 * @param Path the path to the files
+	 * 
 	 */
-	public static void openFlux(String postPath, String commentPath) {
+	public static void openFlux(String Path) {
 		try {
-			fluxPosts = new FileInputStream(PATH+postPath);
+			fluxPosts = new FileInputStream(Path+"posts.dat");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
 		
 		try {
-			fluxComments = new FileInputStream(PATH+commentPath);
+			fluxComments = new FileInputStream(Path+"comments.dat");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -123,12 +122,12 @@ public class Reader {
 	
 	/**
 	 * read the files and add the data into Data class
-	 * @param postsPath the path to the posts file
-	 * @param commentsPath the path to the comments file
+	 * @param Path the path to the files
+	 * 
 	 */
-	public static void makeInput(String postsPath, String commentsPath){
+	public static void makeInput(String Path){
 		//first open and create all things we need
-		openFlux(postsPath, commentsPath);
+		openFlux(Path);
 		
 		//read the first line of the files
 		String lignePost = readBuff(buffPosts);
