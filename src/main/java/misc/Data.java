@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import modeles.Comments;
 import modeles.Entree;
@@ -52,6 +53,7 @@ public class Data {
 			}
 			lastUpdate = c.getTime();
 		}
+		removeDeadPost();
 		Output.checkTopChanged(getTopScore());
 	}
 	
@@ -68,5 +70,10 @@ public class Data {
 
 	public static Timestamp getLastUpdate() {
 		return lastUpdate;
+	}
+
+	public static void removeDeadPost() {
+		List<Post> deadPost = posts.stream().filter(p->p.getScore()==0).collect(Collectors.toList());
+		posts.removeAll(deadPost);
 	}
 }

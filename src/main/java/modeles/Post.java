@@ -89,11 +89,16 @@ public class Post extends Entree implements Comparable<Post>{
 				}else if(this.time.after(o.time)){
 					return 1;
 				}else {
-					if(this.comments.get(this.comments.size()-1).getTime().before(o.comments.get(this.comments.size()-1).getTime())) {
-						return -1;
+					if(!this.comments.isEmpty() && !o.comments.isEmpty()) {
+						if(this.comments.get(this.comments.size()-1).getTime().before(o.comments.get(this.comments.size()-1).getTime())) {
+							return -1;
+						}else {
+							return 1;
+						}
 					}else {
 						return 1;
 					}
+					
 				}
 			}
 		}else {

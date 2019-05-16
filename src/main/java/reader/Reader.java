@@ -141,17 +141,17 @@ public class Reader {
 			String[] motsComments = ligneComment.split("\\|");
 			
 			//compare the timestamp and add the older to the Data class, then read the next line
-			if (TurnInto.timeStamp(motsPosts[0]).before(TurnInto.timeStamp(motsComments[0]))) {
-				Post P = toPost(motsPosts);
-				// M�thode pour envoyer le post dans la chaine principale
-				Data.addData(P);
-				lignePost = readBuff(buffPosts);				
-			}
-			else {
+			if (TurnInto.timeStamp(motsPosts[0]).after(TurnInto.timeStamp(motsComments[0]))) {
 				Comments C = toComment(motsComments);
 				// M�thode pour envoyer le commentaire dans la chaine principale
 				Data.addData(C);
-				ligneComment = readBuff(buffComments);
+				ligneComment = readBuff(buffComments);		
+			}
+			else {
+				Post P = toPost(motsPosts);
+				// M�thode pour envoyer le post dans la chaine principale
+				Data.addData(P);
+				lignePost = readBuff(buffPosts);	
 			}
 		}
 		
