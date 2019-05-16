@@ -46,7 +46,6 @@ public class Comments extends Entree {
 		//obtient la difference en miliseconde des deux date et divise pour avoir la difference en jours
 		int dayElapsed = (int) ((t.getTime() - time.getTime())/(24 * 60 * 60 * 1000));
 		score = 10-dayElapsed;
-		System.out.println("score commentaire : "+score);
 		
 		if(score <0) {
 			score = 0;
