@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 import modeles.Comments;
@@ -13,7 +14,7 @@ import writer.Output;
 
 public class Data {
 	
-	private static List<Post> posts = new ArrayList<Post>();
+	private static Vector<Post> posts = new Vector<Post>();
 	private static Timestamp lastUpdate =null;
 	
 	public static List<Post> getData(){
@@ -55,6 +56,39 @@ public class Data {
 		}
 		removeDeadPost();
 		Output.checkTopChanged(getTopScore());
+	}
+	
+	public static void addComment(Comments c) {
+		if(c.getRepId() == -1) {
+			for(Post p : posts) {
+				if(p.getId() == c.getPostId()) {
+					p.addComment(c);
+					System.out.println(c.getTime()+" add comment to "+p.getUser());
+				}
+				p.updateScore(c.getTime());
+			}
+		}else {
+			for(Post p : posts) {
+				for(Comments cmt: p.getComments()) {
+					if(cmt.getId() == c.getRepId()) {
+						p.addComment(c);
+						System.out.println(c.getTime()+" add comment to a comment to "+p.getUser());
+						break;
+					}
+				}
+				p.updateScore(c.getTime());
+			}
+		}
+		lastUpdate = c.getTime();
+		removeDeadPost();
+	}
+	
+	public static void addPost(Post p) {
+		posts.add(p);
+		System.out.println(p.getTime()+" add post of "+p.getUser());
+		posts.forEach(po->po.updateScore(p.getTime()));
+		lastUpdate = p.getTime();
+		removeDeadPost();
 	}
 	
 	public static List<Post> getTopScore() {
