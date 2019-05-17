@@ -7,30 +7,33 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
+import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 import misc.Data;
 import misc.TurnInto;
 import modeles.Comments;
+import modeles.Entree;
 import modeles.Post;
 
 public class ThreadReaderPost implements Runnable {
 
-	public static final String PATH = System.getProperty("user.home") + "\\Local Settings\\Application Data"
-			+ "/HPP_Project/";
-	private static InputStream flux = null;
-	private static InputStreamReader Reader = null;
-	private static BufferedReader buff = null;
+	private String Path;
+	private InputStream flux = null;
+	private InputStreamReader Reader = null;
+	private BufferedReader buff = null;
+	private BlockingQueue<Post> Queue;
 
 	@Override
 	public void run() {
-		makeInputPost("\\Tests\\Q1BigTest\\posts.dat");
+		makeInputPost();
 
 	}
 
-	public ThreadReaderPost() {
-
+	public ThreadReaderPost(BlockingQueue<Post> Queue, String Path) {
+		this.Queue = Queue;
+		this.Path = Path;
 	}
 
 	/**
@@ -39,7 +42,7 @@ public class ThreadReaderPost implements Runnable {
 	 * @param buff
 	 * @return the ligne or null if there are no more lignes
 	 */
-	public static String readBuff(BufferedReader buff) {
+	public String readBuff(BufferedReader buff) {
 		String ligne = null;
 		try {
 			ligne = buff.readLine();
@@ -56,10 +59,10 @@ public class ThreadReaderPost implements Runnable {
 	 * @param postPath    the path to the posts file
 	 * @param commentPath the path to the comments file
 	 */
-	public static void openFlux(String Path) {
+	public void openFlux() {
 
 		try {
-			flux = new FileInputStream(PATH + Path);
+			flux = new FileInputStream(Path);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -72,7 +75,7 @@ public class ThreadReaderPost implements Runnable {
 	/**
 	 * close all flux, streamReader, BufferedReader
 	 */
-	public static void closeFlux() {
+	public void closeFlux() {
 		try {
 			flux.close();
 		} catch (IOException e) {
@@ -99,9 +102,9 @@ public class ThreadReaderPost implements Runnable {
 	 * @param postsPath    the path to the posts file
 	 * @param commentsPath the path to the comments file
 	 */
-	public static void makeInputPost(String Path) {
+	public void makeInputPost() {
 		// first open and create all things we need
-		openFlux(Path);
+		openFlux();
 
 		// read the first line of the files
 		String ligne = readBuff(buff);
@@ -114,12 +117,22 @@ public class ThreadReaderPost implements Runnable {
 
 			Post P = toPost(motsPosts);
 			// M�thode pour envoyer le post dans la chaine principale
-			Data.addData(P);
+			try {
+				Queue.put(P);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
 			ligne = readBuff(buff);
 
 		}
+		
+		// Poison pill
 		Post Pfin = new Post(null, -1, "");
-		Data.addData(Pfin);
+		try {
+			Queue.put(Pfin);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		// close everything
 		closeFlux();
 		System.out.println("Done");
