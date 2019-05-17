@@ -14,4 +14,6 @@ public class BenchmarkPathing {
 	public static final String Q1CommentCount = PATH+"Tests\\Q1CommentCount\\";
 	public static final String Q1PostExpiredComment = PATH+"Tests\\Q1PostExpiredComment\\";
 	public static final String Q1PostExpiredComment2 = PATH+"Tests\\Q1PostExpiredComment2\\";
+	
+	//Je rajoute des commentaires pour voir si il se passe quelque chose avec le ignore =)
 }
