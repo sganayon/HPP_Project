@@ -11,17 +11,19 @@ import java.nio.file.StandardOpenOption;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 
 import misc.Const;
 import misc.Data;
 import modeles.Post;
 import reader.Reader;
 
+
 public class Output {
 	private static List<Post> top=new ArrayList<Post>(3);
 	private static File f = null;
 
-	Output(){
+	public Output(){
 		
 	}
 	
