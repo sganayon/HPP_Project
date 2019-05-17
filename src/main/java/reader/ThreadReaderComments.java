@@ -61,7 +61,7 @@ public class ThreadReaderComments implements Runnable {
 	public void openFlux() {
 
 		try {
-			flux = new FileInputStream(Path);
+			flux = new FileInputStream(Path+"comments.dat");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,7 +135,7 @@ public class ThreadReaderComments implements Runnable {
 		}
 		// close everything
 		closeFlux();
-		System.out.println("Done");
+		System.out.println("Done reading Comments");
 	}
 	
 	

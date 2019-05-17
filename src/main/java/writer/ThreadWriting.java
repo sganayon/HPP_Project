@@ -18,60 +18,67 @@ import modeles.Post;
 public class ThreadWriting implements Runnable {
 	private static List<Post> top=new ArrayList<Post>(3);
 	private static File f=null;
-	private BlockingQueue<Boolean> queue=null;
+	private BlockingQueue<List<Post>> queue=null;
 
-	ThreadWriting(BlockingQueue<Boolean> queue, String path){
+	public ThreadWriting(BlockingQueue<List<Post>> queue, String path){
 		f=new File(path+"output.txt");
 		this.queue=queue;
+		clearOutput();
 	}
 	
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		
+		List<Post> top3 = null;
 		try {
-			while(queue.take())
+			top3 = queue.take();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	
+		while(top3.get(0)!=null)
+		{
+			if(checkTopChanged(top3))
 			{
+				StringBuilder output = new StringBuilder();
+				Timestamp t = Data.getLastUpdate();
 				
-				if(checkTopChanged(Data.getTopScore()))
+				output.append(t.toString().replace(" ", "T")+"+0000");
+				for (Post p : top)
 				{
-					StringBuilder output = new StringBuilder();
-					Timestamp t = Data.getLastUpdate();
-					
-					output.append(t.toString().replace(" ", "T")+"+0000");
-					for (Post p : top)
-					{
-						output.append(","+String.valueOf(p.getId()));
-						output.append(","+p.getUser());
-						output.append(","+String.valueOf(p.getScore()));
-						output.append(","+String.valueOf(p.getNbCommenteers()));	
-					}
-					if(top.size() != 3) {
-						for(int i=0;i<3-top.size();i++) {
-							output.append(",-");
-							output.append(",-");
-							output.append(",-");
-							output.append(",-");
-						}
-					}
-					output.append("\r\n");
-					
-					try {
-						Path fichierglobal = Paths.get("output.txt");
-						Files.write(fichierglobal, output.toString().getBytes(), StandardOpenOption.APPEND);
-
-					} catch (IOException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					output.append(","+String.valueOf(p.getId()));
+					output.append(","+p.getUser());
+					output.append(","+String.valueOf(p.getScore()));
+					output.append(","+String.valueOf(p.getNbCommenteers()));	
+				}
+				if(top.size() != 3) {
+					for(int i=0;i<3-top.size();i++) {
+						output.append(",-");
+						output.append(",-");
+						output.append(",-");
+						output.append(",-");
 					}
 				}
+				output.append("\r\n");
+				
+				try {
+					Path fichierglobal = f.toPath();
+					Files.write(fichierglobal, output.toString().getBytes(), StandardOpenOption.APPEND);
+
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			try {
+				top3 = queue.take();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
-		
-		
+		System.out.println("Done Processing");
 	}
 	
 	public static boolean checkTopChanged(List<Post> top3Post) {
@@ -88,6 +95,18 @@ public class ThreadWriting implements Runnable {
 			}
 		}
 		return false;
+	}
+	
+	public static void clearOutput() {
+		if(f.exists()) {
+			f.delete();
+		}
+		try {
+			f.createNewFile();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

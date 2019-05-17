@@ -62,7 +62,7 @@ public class ThreadReaderPost implements Runnable {
 	public void openFlux() {
 
 		try {
-			flux = new FileInputStream(Path);
+			flux = new FileInputStream(Path+"posts.dat");
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,7 +135,7 @@ public class ThreadReaderPost implements Runnable {
 		}
 		// close everything
 		closeFlux();
-		System.out.println("Done");
+		System.out.println("Done reading Post");
 	}
 	
 	

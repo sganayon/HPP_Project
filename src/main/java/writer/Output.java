@@ -70,7 +70,7 @@ public class Output {
 		output.append("\r\n");
 		
 		try {
-			Path fichierglobal = f. toPath();
+			Path fichierglobal = f.toPath();
 			Files.write(fichierglobal, output.toString().getBytes(), StandardOpenOption.APPEND);
 
 		} catch (IOException e) {

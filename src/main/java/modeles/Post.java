@@ -19,6 +19,15 @@ public class Post extends Entree implements Comparable<Post>{
 		this.id = id;
 		this.user = user;
 	}
+	
+	public Post(Timestamp time, int id, String user, int score) {
+		super();
+		this.time = time;
+		this.id = id;
+		this.user = user;
+		this.score = score;
+	}
+	
 	@Override
 	public String toString() {
 		return "Post [time=" + time + ", id=" + id + ", user=" + user + ", score=" + score + "]";
@@ -106,5 +115,9 @@ public class Post extends Entree implements Comparable<Post>{
 		}
 	}
 	
+	@Override
+	public Post clone() {
+		return new Post(time,id,user, score);
+	}
 	
 }

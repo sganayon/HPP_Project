@@ -58,7 +58,7 @@ public class Data {
 		Output.checkTopChanged(getTopScore());
 	}
 	
-	public static void addComment(Comments c) {
+	public synchronized static void addComment(Comments c) {
 		if(c.getRepId() == -1) {
 			for(Post p : posts) {
 				if(p.getId() == c.getPostId()) {
@@ -83,7 +83,7 @@ public class Data {
 		removeDeadPost();
 	}
 	
-	public static void addPost(Post p) {
+	public synchronized static void addPost(Post p) {
 		posts.add(p);
 		System.out.println(p.getTime()+" add post of "+p.getUser());
 		posts.forEach(po->po.updateScore(p.getTime()));
@@ -91,18 +91,23 @@ public class Data {
 		removeDeadPost();
 	}
 	
-	public static List<Post> getTopScore() {
-		List<Post> top3 = new Vector<Post>(3);
-		
+	public synchronized static List<Post> getTopScore() {
+		List<Post> top3 = new ArrayList<Post>(3);
+		List<Post> top1 = new ArrayList<Post>(3);
 		Collections.sort(posts);
 		Collections.reverse(posts);
 		int max = (3>posts.size())?posts.size():3;
+		top1 = posts.subList(0, max);
 		
-		top3.addAll(posts.subList(0, max));
+		for(Post p : top1) {
+			top3.add(p.clone());
+		}
+
+		System.out.println(top3);
 		return top3;
 	}
 
-	public static Timestamp getLastUpdate() {
+	public synchronized static Timestamp getLastUpdate() {
 		return lastUpdate;
 	}
 
