@@ -4,16 +4,16 @@ import java.sql.Timestamp;
 
 public class Comments extends Entree {
 	private Timestamp time;
-	private int id;
+	private long id;
 	private int score = 10;
-	private int userId;
-	private int repId;
-	private int postId;
+	private long userId;
+	private long repId;
+	private long postId;
 	@Override
 	public String toString() {
 		return "Comments [time=" + time + ", id=" + id + ", score=" + score + ", userId=" + userId + "]";
 	}
-	public Comments(Timestamp time, int id, int userId, int repId, int PostId) {
+	public Comments(Timestamp time, long id, long userId, long repId, long PostId) {
 		super();
 		this.time = time;
 		this.id = id;
@@ -22,7 +22,7 @@ public class Comments extends Entree {
 		this.postId = PostId;
 	}
 	
-	public Comments(Timestamp time, int id, int userId, int repId, int PostId, int score) {
+	public Comments(Timestamp time, long id, long userId, long repId, long PostId, int score) {
 		super();
 		this.time = time;
 		this.id = id;
@@ -34,19 +34,19 @@ public class Comments extends Entree {
 	public Timestamp getTime() {
 		return time;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public int getScore() {
 		return score;
 	}
-	public int getUserId() {
+	public long getUserId() {
 		return userId;
 	}
-	public int getRepId() {
+	public long getRepId() {
 		return repId;
 	}
-	public int getPostId() {
+	public long getPostId() {
 		return postId;
 	}
 	public void updateScore(Timestamp t) {

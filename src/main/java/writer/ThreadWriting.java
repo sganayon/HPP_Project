@@ -71,6 +71,12 @@ public class ThreadWriting implements Runnable {
 					e.printStackTrace();
 				}
 			}
+			StringBuilder sb = new StringBuilder();
+			sb.append("Top changed at "+top3.getTime().toString());
+			for(Post p : top) {
+				sb.append(" , "+p.getUser());
+			}
+			System.out.println(sb.toString());
 			try {
 				top3 = queue.take();
 			} catch (InterruptedException e) {

@@ -23,10 +23,10 @@ public class App {
 		BlockingQueue<Comments> commentsQueue = new ArrayBlockingQueue<Comments>(10);
 		BlockingQueue<Top> OutputQueue = new ArrayBlockingQueue<Top>(100);
 		
-		Thread commentsProducer = new Thread(new ThreadReaderComments(commentsQueue, Const.Q1Basic2));
-		Thread postsProducer = new Thread(new ThreadReaderPost(postsQueue, Const.Q1Basic2));
+		Thread commentsProducer = new Thread(new ThreadReaderComments(commentsQueue, Const.PATH));
+		Thread postsProducer = new Thread(new ThreadReaderPost(postsQueue, Const.PATH));
 		Thread threadfeeder = new Thread(new ThreadFeeder(postsQueue,commentsQueue,OutputQueue));
-		Thread writterConsumer = new Thread(new ThreadWriting(OutputQueue, Const.Q1Basic2));
+		Thread writterConsumer = new Thread(new ThreadWriting(OutputQueue, Const.PATH));
 		
 		commentsProducer.start();
 		postsProducer.start();

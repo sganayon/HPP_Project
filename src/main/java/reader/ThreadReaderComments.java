@@ -148,9 +148,9 @@ public class ThreadReaderComments implements Runnable {
 	 */
 	public Comments toComment(String[] mots) {
 		Timestamp t = TurnInto.timeStamp(mots[0]);
-		int repId = (mots[5].isEmpty()) ? -1 : Integer.valueOf(mots[5]);
-		int postId = (mots.length == 6) ? -1 : Integer.valueOf(mots[6]);
-		return new Comments(t, Integer.valueOf(mots[1]), Integer.valueOf(mots[2]), repId, postId);
+		long repId = (mots[5].isEmpty()) ? -1 : Long.valueOf(mots[5]);
+		long postId = (mots.length == 6) ? -1 : Long.valueOf(mots[6]);
+		return new Comments(t, Long.valueOf(mots[1]), Long.valueOf(mots[2]), repId, postId);
 	}
 
 	/**
@@ -161,7 +161,7 @@ public class ThreadReaderComments implements Runnable {
 	 */
 	public Post toPost(String[] mots) {
 		Timestamp t = TurnInto.timeStamp(mots[0]);
-		return new Post(t, Integer.valueOf(mots[1]), mots[4]);
+		return new Post(t, Long.valueOf(mots[1]), mots[4]);
 	}
 
 }

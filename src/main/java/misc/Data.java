@@ -25,7 +25,6 @@ public class Data {
 		if(o instanceof Post) {
 			Post p = (Post) o;
 			posts.add(p);
-			System.out.println(p.getTime()+" add post of "+p.getUser());
 			posts.forEach(po->po.updateScore(p.getTime()));
 			lastUpdate = p.getTime();
 		}
@@ -36,7 +35,6 @@ public class Data {
 				for(Post p : posts) {
 					if(p.getId() == c.getPostId()) {
 						p.addComment(c);
-						System.out.println(c.getTime()+" add comment to "+p.getUser());
 					}
 					p.updateScore(c.getTime());
 				}
@@ -45,7 +43,6 @@ public class Data {
 					for(Comments cmt: p.getComments()) {
 						if(cmt.getId() == c.getRepId()) {
 							p.addComment(c);
-							System.out.println(c.getTime()+" add comment to a comment "+p.getUser());
 							break;
 						}
 					}
@@ -63,7 +60,6 @@ public class Data {
 			for(Post p : posts) {
 				if(p.getId() == c.getPostId()) {
 					p.addComment(c);
-					System.out.println(c.getTime()+" add comment to "+p.getUser());
 				}
 				p.updateScore(c.getTime());
 			}
@@ -72,7 +68,6 @@ public class Data {
 				for(Comments cmt: p.getComments()) {
 					if(cmt.getId() == c.getRepId()) {
 						p.addComment(c);
-						System.out.println(c.getTime()+" add comment to a comment to "+p.getUser());
 						break;
 					}
 				}
@@ -84,7 +79,6 @@ public class Data {
 	
 	public synchronized static void addPost(Post p) {
 		posts.add(p);
-		System.out.println(p.getTime()+" add post of "+p.getUser());
 		posts.forEach(po->po.updateScore(p.getTime()));
 		removeDeadPost();
 	}
@@ -100,8 +94,6 @@ public class Data {
 		for(Post p : top1) {
 			top3.add(p.clone());
 		}
-
-		System.out.println(top3);
 		return top3;
 	}
 
