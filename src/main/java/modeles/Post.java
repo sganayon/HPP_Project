@@ -26,7 +26,7 @@ public class Post extends Entree implements Comparable<Post>{
 	public Timestamp getTime() {
 		return time;
 	}
-	public int getId() {
+	public long getId() {
 		return id;
 	}
 	public String getUser() {
