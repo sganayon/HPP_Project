@@ -109,4 +109,5 @@ buildNumber.properties
 
 ### DEV ###
 output.txt
+src\main\java\misc\BenchmarkPathing.java
 # End of https://www.gitignore.io/api/java,maven,eclipse
