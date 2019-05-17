@@ -38,7 +38,7 @@ public class ThreadWriting implements Runnable {
 			e1.printStackTrace();
 		}
 	
-		while(top3.getPosts().get(0)!=null)
+		while(top3.getPosts()!=null)
 		{
 			if(checkTopChanged(top3.getPosts()))
 			{

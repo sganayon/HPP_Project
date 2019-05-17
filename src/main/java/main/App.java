@@ -21,7 +21,7 @@ public class App {
 	public static void main(String[] args) throws InterruptedException {
 		BlockingQueue<Post> postsQueue = new ArrayBlockingQueue<Post>(10);
 		BlockingQueue<Comments> commentsQueue = new ArrayBlockingQueue<Comments>(10);
-		BlockingQueue<Top> OutputQueue = new ArrayBlockingQueue<Top>(100);
+		BlockingQueue<Top> OutputQueue = new ArrayBlockingQueue<Top>(10000);
 		
 		Thread commentsProducer = new Thread(new ThreadReaderComments(commentsQueue, Const.PATH));
 		Thread postsProducer = new Thread(new ThreadReaderPost(postsQueue, Const.PATH));

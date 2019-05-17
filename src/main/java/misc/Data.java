@@ -87,10 +87,9 @@ public class Data {
 		List<Post> top3 = new ArrayList<Post>(3);
 		List<Post> top1 = new ArrayList<Post>(3);
 		Collections.sort(posts);
-		Collections.reverse(posts);
-		int max = (3>posts.size())?posts.size():3;
-		top1 = posts.subList(0, max);
-		
+		int min = (posts.size()<3)?0:posts.size()-3;
+		top1 = posts.subList(min, posts.size());
+		Collections.reverse(top1);
 		for(Post p : top1) {
 			top3.add(p.clone());
 		}

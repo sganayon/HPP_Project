@@ -117,9 +117,7 @@ public class ThreadFeeder implements Runnable {
 		}
 		
 		try {
-			List<Post> poisounous = new ArrayList<Post>();
-			poisounous.add(null);
-			Top t = new Top(poisounous, null);
+			Top t = new Top(null,null);
 			outQueue.put(t);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
