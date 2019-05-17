@@ -13,4 +13,5 @@ public class Const {
 	public static final String Q1CommentCount = PATH+"Tests\\Q1CommentCount\\";
 	public static final String Q1PostExpiredComment = PATH+"Tests\\Q1PostExpiredComment\\";
 	public static final String Q1PostExpiredComment2 = PATH+"Tests\\Q1PostExpiredComment2\\";
+	public static final String AllData = PATH+"dataDebs\\";
 }
