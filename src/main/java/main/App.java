@@ -9,14 +9,10 @@ import writer.Output;
 public class App {
 
 	public static void main(String[] args) throws InterruptedException {
+		Output.setFile(Const.Q1Basic);
+		Output.clearOutput();
 		
-		Thread readP = new Thread(new ThreadReaderPost());
-		Thread readC = new Thread(new ThreadReaderComments());
-		readP.start();
-		readC.start();
+		Reader.makeInput(Const.Q1Basic);
 		
-		readP.join();
-		readC.join();
-
 	}
 }

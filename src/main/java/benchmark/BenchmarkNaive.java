@@ -19,18 +19,13 @@ import org.openjdk.jmh.annotations.Warmup;
 
 import misc.Const;
 import reader.Reader;
+import writer.Output;
 
 @State(Scope.Benchmark)
 public class BenchmarkNaive {
-
-	/**
-	 * the size of the array. it will change for every test
-	 */
-	@Param({ "Tests/Q1Basic2/posts.dat", "posts.dat", "dataDebs/posts.dat"})
-	private String postsFile;
 	
-	@Param({ "Tests/Q1Basic2/comments.dat", "comments.dat", "dataDebs/comments.dat"})
-	private String commentsFile;
+	@Param({})
+	private String path;
 	
 	/**
 	 * the benchmark compute every operations that is in this method.
@@ -47,7 +42,10 @@ public class BenchmarkNaive {
     @Measurement(iterations = 5, time = 100, timeUnit = TimeUnit.MILLISECONDS)
     @BenchmarkMode({Mode.Throughput, Mode.AverageTime})
     public void testMethod() {
-    	Reader.makeInput(Const.Q1BigTest);
+    	Output.setFile(path);
+		Output.clearOutput();
+		
+		Reader.makeInput(path);
     }
     
     /**
