@@ -79,7 +79,6 @@ public class Data {
 				p.updateScore(c.getTime());
 			}
 		}
-		lastUpdate = c.getTime();
 		removeDeadPost();
 	}
 	
@@ -87,7 +86,6 @@ public class Data {
 		posts.add(p);
 		System.out.println(p.getTime()+" add post of "+p.getUser());
 		posts.forEach(po->po.updateScore(p.getTime()));
-		lastUpdate = p.getTime();
 		removeDeadPost();
 	}
 	

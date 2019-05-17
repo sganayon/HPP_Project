@@ -21,6 +21,16 @@ public class Comments extends Entree {
 		this.repId = repId;
 		this.postId = PostId;
 	}
+	
+	public Comments(Timestamp time, int id, int userId, int repId, int PostId, int score) {
+		super();
+		this.time = time;
+		this.id = id;
+		this.userId = userId;
+		this.repId = repId;
+		this.postId = PostId;
+		this.score = score;
+	}
 	public Timestamp getTime() {
 		return time;
 	}
@@ -50,5 +60,10 @@ public class Comments extends Entree {
 		if(score <0) {
 			score = 0;
 		}
+	}
+	
+	@Override
+	public Comments clone() {
+		return new Comments((Timestamp)this.time.clone(),this.id, this.userId,this.repId,this.postId, this.score);
 	}
 }

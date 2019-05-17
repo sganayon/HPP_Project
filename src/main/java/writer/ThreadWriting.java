@@ -14,13 +14,14 @@ import java.util.concurrent.BlockingQueue;
 
 import misc.Data;
 import modeles.Post;
+import modeles.Top;
 
 public class ThreadWriting implements Runnable {
 	private static List<Post> top=new ArrayList<Post>(3);
 	private static File f=null;
-	private BlockingQueue<List<Post>> queue=null;
+	private BlockingQueue<Top> queue=null;
 
-	public ThreadWriting(BlockingQueue<List<Post>> queue, String path){
+	public ThreadWriting(BlockingQueue<Top> queue, String path){
 		f=new File(path+"output.txt");
 		this.queue=queue;
 		clearOutput();
@@ -29,7 +30,7 @@ public class ThreadWriting implements Runnable {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		List<Post> top3 = null;
+		Top top3 = null;
 		try {
 			top3 = queue.take();
 		} catch (InterruptedException e1) {
@@ -37,14 +38,13 @@ public class ThreadWriting implements Runnable {
 			e1.printStackTrace();
 		}
 	
-		while(top3.get(0)!=null)
+		while(top3.getPosts().get(0)!=null)
 		{
-			if(checkTopChanged(top3))
+			if(checkTopChanged(top3.getPosts()))
 			{
 				StringBuilder output = new StringBuilder();
-				Timestamp t = Data.getLastUpdate();
 				
-				output.append(t.toString().replace(" ", "T")+"+0000");
+				output.append(top3.getTime().toString().replace(" ", "T")+"+0000");
 				for (Post p : top)
 				{
 					output.append(","+String.valueOf(p.getId()));

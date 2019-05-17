@@ -6,15 +6,16 @@ import java.util.concurrent.BlockingQueue;
 
 import modeles.Comments;
 import modeles.Post;
+import modeles.Top;
 
 public class ThreadFeeder implements Runnable {
 
 	private BlockingQueue<Post> postQueue = null;
 	private BlockingQueue<Comments> commentsQueue = null;
-	private BlockingQueue<List<Post>> outQueue = null;
+	private BlockingQueue<Top> outQueue = null;
 	
 	
-	public ThreadFeeder(BlockingQueue<Post> postQueue, BlockingQueue<Comments> commentsQueue,BlockingQueue<List<Post>> outQueue) {
+	public ThreadFeeder(BlockingQueue<Post> postQueue, BlockingQueue<Comments> commentsQueue,BlockingQueue<Top> outQueue) {
 		super();
 		this.postQueue = postQueue;
 		this.commentsQueue = commentsQueue;
@@ -42,16 +43,20 @@ public class ThreadFeeder implements Runnable {
 		
 		while(postTmp.getId() != -1 && comTmp.getId() != -1) {
 			
+			Top t = null;
 			if(postTmp.getTime().after(comTmp.getTime())) {
 				Data.addComment(comTmp);
+				t = new Top(Data.getTopScore(), comTmp.getTime());
 				comTmp = null;
 			}else {
 				Data.addPost(postTmp);
+				t = new Top(Data.getTopScore(), postTmp.getTime());
 				postTmp = null;
 			}
 			
+			
 			try {
-				outQueue.put(Data.getTopScore());
+				outQueue.put(t);
 			} catch (InterruptedException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -78,6 +83,7 @@ public class ThreadFeeder implements Runnable {
 		if(postTmp.getId() == -1) {
 			while(comTmp.getId() != -1) {
 				Data.addComment(comTmp);
+				Top t = new Top(Data.getTopScore(), comTmp.getTime());
 				try {
 					comTmp = commentsQueue.take();
 				} catch (InterruptedException e) {
@@ -85,7 +91,7 @@ public class ThreadFeeder implements Runnable {
 					e.printStackTrace();
 				}
 				try {
-					outQueue.put(Data.getTopScore());
+					outQueue.put(t);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -94,6 +100,7 @@ public class ThreadFeeder implements Runnable {
 		}else {
 			while(postTmp.getId() != -1) {
 				Data.addPost(postTmp);
+				Top t = new Top(Data.getTopScore(), postTmp.getTime());
 				try {
 					postTmp = postQueue.take();
 				} catch (InterruptedException e) {
@@ -101,7 +108,7 @@ public class ThreadFeeder implements Runnable {
 					e.printStackTrace();
 				}
 				try {
-					outQueue.put(Data.getTopScore());
+					outQueue.put(t);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -112,7 +119,8 @@ public class ThreadFeeder implements Runnable {
 		try {
 			List<Post> poisounous = new ArrayList<Post>();
 			poisounous.add(null);
-			outQueue.put(poisounous);
+			Top t = new Top(poisounous, null);
+			outQueue.put(t);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

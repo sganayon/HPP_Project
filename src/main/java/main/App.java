@@ -9,6 +9,7 @@ import misc.Const;
 import misc.ThreadFeeder;
 import modeles.Comments;
 import modeles.Post;
+import modeles.Top;
 import reader.Reader;
 import reader.ThreadReaderComments;
 import reader.ThreadReaderPost;
@@ -20,7 +21,7 @@ public class App {
 	public static void main(String[] args) throws InterruptedException {
 		BlockingQueue<Post> postsQueue = new ArrayBlockingQueue<Post>(10);
 		BlockingQueue<Comments> commentsQueue = new ArrayBlockingQueue<Comments>(10);
-		BlockingQueue<List<Post>> OutputQueue = new ArrayBlockingQueue<List<Post>>(100);
+		BlockingQueue<Top> OutputQueue = new ArrayBlockingQueue<Top>(100);
 		
 		Thread commentsProducer = new Thread(new ThreadReaderComments(commentsQueue, Const.Q1Basic2));
 		Thread postsProducer = new Thread(new ThreadReaderPost(postsQueue, Const.Q1Basic2));

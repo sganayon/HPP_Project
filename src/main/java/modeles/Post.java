@@ -20,12 +20,13 @@ public class Post extends Entree implements Comparable<Post>{
 		this.user = user;
 	}
 	
-	public Post(Timestamp time, int id, String user, int score) {
+	public Post(Timestamp time, int id, String user, int score, List<Comments> comments) {
 		super();
 		this.time = time;
 		this.id = id;
 		this.user = user;
 		this.score = score;
+		this.comments = comments;
 	}
 	
 	@Override
@@ -99,7 +100,7 @@ public class Post extends Entree implements Comparable<Post>{
 					return 1;
 				}else {
 					if(!this.comments.isEmpty() && !o.comments.isEmpty()) {
-						if(this.comments.get(this.comments.size()-1).getTime().before(o.comments.get(this.comments.size()-1).getTime())) {
+						if(this.comments.get(this.comments.size()-1).getTime().before(o.comments.get(o.comments.size()-1).getTime())) {
 							return -1;
 						}else {
 							return 1;
@@ -117,7 +118,11 @@ public class Post extends Entree implements Comparable<Post>{
 	
 	@Override
 	public Post clone() {
-		return new Post(time,id,user, score);
+		List<Comments> lst = new ArrayList<Comments>();
+		for(Comments c : comments) {
+			lst.add(c.clone());
+		}
+		return new Post((Timestamp)time.clone(),id,user, score, lst);
 	}
 	
 }
