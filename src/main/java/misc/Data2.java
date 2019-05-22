@@ -27,7 +27,6 @@ public class Data2 {
 	private static List<Post> bestPosts = new ArrayList<Post>(3);
 	private static RWLock lock = new RWLock();
 	private static Vector<Long> oldData = new Vector<Long>();
-	private static Lock basicLock = new ReentrantLock();
 	
 	
 	public static void addPost(Post p) {
@@ -38,7 +37,7 @@ public class Data2 {
 		//comment to a post
 		if(c.getPostId() != -1) {
 			List<Comments> lst = comments.get(c.getPostId());
-			basicLock.lock();
+			lock.writeLock();
 			if(lst != null) {
 				lst.add(c);
 			}else {
@@ -46,14 +45,14 @@ public class Data2 {
 				lst.add(c);
 				comments.put(c.getPostId(),lst);
 			}
-			basicLock.unlock();
+			lock.writeUnLock();
 			indexCP.put(c.getId(),c.getPostId());
 			return c.getPostId();
 		}else { //comment to a comment 
 			List<Comments> lst = comments.get(indexCP.get(c.getRepId()));
-			basicLock.lock();
+			lock.writeLock();
 			lst.add(c);
-			basicLock.unlock();
+			lock.writeUnLock();
 			indexCP.put(c.getId(),lst.get(0).getPostId());
 			return lst.get(0).getPostId();
 		}
@@ -64,11 +63,11 @@ public class Data2 {
 		int scoreComm = 0;
 		List<Comments> lst = comments.get(p.getId());
 		if(lst != null) {
-			basicLock.lock();
+			lock.readLock();
 			for(Comments c :lst) {
 				scoreComm+= c.getScoreAt(t);
 			}
-			basicLock.unlock();
+			lock.readUnLock();
 		}
 		
 		int scoreTot = p.getScoreAt(t)+scoreComm;
@@ -210,9 +209,9 @@ public class Data2 {
 	public static int getNbCommofPostAt(Post p, Timestamp t) {
 		List<Comments> lst = comments.get(p.getId());
 		if(lst != null){
-			basicLock.lock();
+			lock.readLock();
 			int nbComm = (int) lst.stream().filter(c->!c.getTime().after(t)).mapToLong(c->c.getUserId()).distinct().count();
-			basicLock.unlock();
+			lock.readUnLock();
 			return nbComm;
 		}else {
 			return 0;
