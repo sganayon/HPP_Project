@@ -33,22 +33,22 @@ public class TestApp {
 		test(Const.Q1BigTest);
 	}
 	
-	@Test
+	@Test //pas de decrementation de score
 	public void testQ1Case1() {
 		test(Const.Q1Case1);
 	}
 	
-	@Test
+	@Test //pas de decrementation de score
 	public void testQ1Case2() {
 		test(Const.Q1Case2);
 	}
 	
-	@Test
+	@Test //pas de decrementation de score
 	public void testQ1Case3() {
 		test(Const.Q1Case3);
 	}
 	
-	@Test
+	@Test //pas de decrementation de score
 	public void testQ1Case4() {
 		test(Const.Q1Case4);
 	}
@@ -61,7 +61,7 @@ public class TestApp {
 	public void testQ1CommentCount() {
 		test(Const.Q1CommentCount);
 	}
-	@Test //fail
+	@Test //pas de decrementation de score
 	public void testQ1PostExpiredComment() {
 		test(Const.Q1PostExpiredComment);
 	}
@@ -127,6 +127,9 @@ public class TestApp {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+		if((ligneExpected != null && ligneOutput == null) || (ligneExpected == null && ligneOutput != null)) {
+			assertEquals(true,false);
 		}
 	}
 
