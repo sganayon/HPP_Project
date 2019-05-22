@@ -14,7 +14,7 @@ public class Comments extends Entree {
 		return "Comments [time=" + time + ", id=" + id + ", score=" + score + ", userId=" + userId + "]";
 	}
 	public Comments(Timestamp time, long id, long userId, long repId, long PostId) {
-		super();
+		super(id,time);
 		this.time = time;
 		this.id = id;
 		this.userId = userId;
@@ -23,7 +23,7 @@ public class Comments extends Entree {
 	}
 	
 	public Comments(Timestamp time, long id, long userId, long repId, long PostId, int score) {
-		super();
+		super(id,time);
 		this.time = time;
 		this.id = id;
 		this.userId = userId;
@@ -55,11 +55,26 @@ public class Comments extends Entree {
 		
 		//obtient la difference en miliseconde des deux date et divise pour avoir la difference en jours
 		int dayElapsed = (int) ((t.getTime() - time.getTime())/(24 * 60 * 60 * 1000));
+		
 		score = 10-dayElapsed;
 		
 		if(score <0) {
 			score = 0;
 		}
+	}
+	
+	public int getScoreAt(Timestamp t) {
+		if(time.after(t)) {
+			return 0;
+		}
+		
+		int scoreTmp = (int) ((t.getTime() - time.getTime())/(24 * 60 * 60 * 1000));
+		
+		int scoreAtT = 10-scoreTmp;
+		if(scoreAtT < 0) {
+			return 0;
+		}
+		return scoreAtT;
 	}
 	
 	@Override
