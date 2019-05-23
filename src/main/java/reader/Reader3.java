@@ -23,6 +23,7 @@ import modeles.Comments;
 import modeles.Entree;
 import misc.Data;
 import misc.Data2;
+import misc.Data3;
 import misc.TurnInto;
 import modeles.Comments;
 import modeles.Post;
@@ -151,7 +152,7 @@ public class Reader3 implements Runnable{
 				
 				Comments C = toComment(motsComments);
 				// M�thode pour envoyer le commentaire dans la chaine principale
-				long id = Data2.addComment(C);
+				long id = Data3.addComment(C);
 				try {
 					events.put(new Entree(id,C.getTime()));
 				} catch (InterruptedException e) {
@@ -164,7 +165,7 @@ public class Reader3 implements Runnable{
 			else {
 				Post P = toPost(motsPosts);
 				// M�thode pour envoyer le post dans la chaine principale
-				Data2.addPost(P);
+				Data3.addPost(P);
 				try {
 					events.put(new Entree(P.getId(),P.getTime()));
 				} catch (InterruptedException e) {
@@ -181,7 +182,7 @@ public class Reader3 implements Runnable{
 			while (ligneComment != null) {
 				Comments C = toComment(ligneComment.split("\\|"));
 				// M�thode pour envoyer le commentaire dans la chaine principale
-				long id = Data2.addComment(C);
+				long id = Data3.addComment(C);
 				try {
 					events.put(new Entree(id,C.getTime()));
 				} catch (InterruptedException e) {
@@ -195,7 +196,7 @@ public class Reader3 implements Runnable{
 			while (lignePost != null) {
 				Post P = toPost(lignePost.split("\\|"));
 				// M�thode pour envoyer le post dans la chaine principale
-				Data2.addPost(P);
+				Data3.addPost(P);
 				System.out.println(P.getTime());
 				try {
 					events.put(new Entree(P.getId(),P.getTime()));

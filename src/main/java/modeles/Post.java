@@ -12,11 +12,13 @@ public class Post extends Entree implements Comparable<Post>{
 	private int score =10;
 	private int nbComm = 0;
 	private List<Comments> comments = new ArrayList<Comments>();
+	private Timestamp lastUpdate;
 	
 	
 	public Post(Timestamp time, long id, String user) {
 		super(id,time);
 		this.time = time;
+		this.lastUpdate = time;
 		this.id = id;
 		this.user = user;
 	}
@@ -24,6 +26,7 @@ public class Post extends Entree implements Comparable<Post>{
 	public Post(Timestamp time, long id, String user, int score, List<Comments> comments) {
 		super(id,time);
 		this.time = time;
+		this.lastUpdate = time;
 		this.id = id;
 		this.user = user;
 		this.score = score;
@@ -33,6 +36,7 @@ public class Post extends Entree implements Comparable<Post>{
 	public Post(Timestamp time, long id, String user, int score,int nbComm,List<Comments> comments) {
 		super(id,time);
 		this.time = time;
+		this.lastUpdate = time;
 		this.id = id;
 		this.user = user;
 		this.score = score;
@@ -65,6 +69,14 @@ public class Post extends Entree implements Comparable<Post>{
 	public void setNbComm(int n) {
 		this.nbComm = n;
 	}
+	public Timestamp getLastUpdate() {
+		return lastUpdate;
+	}
+
+	public void setLastUpdate(Timestamp lastUpdate) {
+		this.lastUpdate = lastUpdate;
+	}
+
 	public int getNbCommenteers() {
 		return (int) comments.stream().mapToLong(c->c.getUserId()).distinct().count();
 	}

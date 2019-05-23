@@ -13,6 +13,7 @@ import java.util.concurrent.locks.ReentrantLock;
 
 import misc.Const;
 import misc.Data2;
+import misc.Data3;
 import misc.RWLock;
 import misc.ThreadComputing;
 import misc.ThreadComputing2;
@@ -37,10 +38,10 @@ public class App {
 
 	public static void main(String[] args) throws InterruptedException {
 
-		String PATH = Const.PATH;
+		String PATH = Const.AllData;
 		BlockingQueue<Entree> events = new ArrayBlockingQueue<Entree>(100);
 		BlockingQueue<Top> tops = new ArrayBlockingQueue<Top>(100);
-		Data2.clearData();
+		Data3.clearData();
 		
 		Thread threadReader = new Thread(new Reader3(PATH,events));
 		threadReader.start();
