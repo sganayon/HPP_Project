@@ -34,7 +34,6 @@ public class ThreadComputing3 implements Runnable{
 		
 		while(e.getId() != -1) {
 			List<Post> lst = Data3.getTop3AtNotMultiThreaded(e);
-			System.out.println("top compute for "+e.getTime());
 			Top top = new Top(lst,e.getTime());
 			try {
 				tops.put(top);

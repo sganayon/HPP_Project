@@ -1,6 +1,7 @@
 package misc;
 
 import java.sql.Timestamp;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -14,21 +15,22 @@ import modeles.Entree;
 import modeles.Post;
 
 public class Data3 {
+	
 	//Id post - post
-	private static Map<Long,Post> posts = new HashMap<Long,Post>(500000);
+	private static Map<Long,Post> posts = new HashMap<Long,Post>(1000000);
 	//Id post - list de comments
-	private static Map<Long,List<Comments>> comments = new HashMap<Long,List<Comments>>(100000);
+	private static Map<Long,List<Comments>> comments = new HashMap<Long,List<Comments>>(1000000);
 	//Id comments - Id posts
-	private static Map<Long,Long> indexCP = new HashMap<Long,Long>(800000);
+	private static Map<Long,Long> indexCP = new HashMap<Long,Long>(4000000);
 	
 	private static List<Post> bestPosts = new ArrayList<Post>(3);
 	private static RWLock lock = new RWLock();
-	private static Vector<Long> oldData = new Vector<Long>();
 	private static Timestamp time = null;
 	
 	
 	public static void addPost(Post p) {
 		posts.put(p.getId(), p);
+		removeOldData2(p.getTime());
 	}
 	
 	public static long addComment(Comments c) {
@@ -44,7 +46,6 @@ public class Data3 {
 				comments.put(c.getPostId(),lst);
 			}
 			lock.writeUnLock();
-			removeOldData2(c.getTime());
 			indexCP.put(c.getId(),c.getPostId());
 			return c.getPostId();
 		}else { //comment to a comment 
@@ -52,29 +53,10 @@ public class Data3 {
 			lock.writeLock();
 			lst.add(c);
 			lock.writeUnLock();
-			removeOldData2(c.getTime());
 			indexCP.put(c.getId(),lst.get(0).getPostId());
 			return lst.get(0).getPostId();
 		}
 		
-	}
-
-	public static int getScoreOfPostAt(Post p, Timestamp t) {
-		int scoreComm = 0;
-		List<Comments> lst = comments.get(p.getId());
-		if(lst != null) {
-			lock.readLock();
-			for(Comments c :lst) {
-				scoreComm+= c.getScoreAt(t);
-			}
-			lock.readUnLock();
-		}
-		
-		lock.readLock();
-		int scoreTot = p.getScoreAt(t)+scoreComm;
-		lock.readUnLock();
-		
-		return scoreTot;
 	}
 
 	public static List<Post> getTop3AtNotMultiThreaded(Entree e){
@@ -162,6 +144,24 @@ public class Data3 {
 		return lst;
 	}
 	
+	public static int getScoreOfPostAt(Post p, Timestamp t) {
+		int scoreComm = 0;
+		List<Comments> lst = comments.get(p.getId());
+		if(lst != null) {
+			lock.readLock();
+			for(Comments c :lst) {
+				scoreComm+= c.getScoreAt(t);
+			}
+			lock.readUnLock();
+		}
+		
+		lock.readLock();
+		int scoreTot = p.getScoreAt(t)+scoreComm;
+		lock.readUnLock();
+		
+		return scoreTot;
+	}
+
 	public static int getNbCommofPostAt(Post p, Timestamp t) {
 		List<Comments> lst = comments.get(p.getId());
 		if(lst != null){
@@ -175,31 +175,23 @@ public class Data3 {
 		
 	}
 
-	public static void clearData() {
-		posts.clear();
-		comments.clear();
-		indexCP.clear();
-		oldData.clear();
-		bestPosts.clear();
-		bestPosts.add(null);
-		bestPosts.add(null);
-		bestPosts.add(null);
-		
-	}
-
 	public static void removeOldData2(Timestamp t) {
 		List<Long> ids = new ArrayList<Long>();
 		if(time == null) {
 			time = t;
 			return;
 		}
-		long diffYear = (t.getTime()-time.getTime())/(24 * 60 * 60 * 1000 * 365);
-		if(diffYear >= 1) {
+		
+		Duration duration = Duration.between(t.toLocalDateTime(), time.toLocalDateTime());
+		long diff = Math.abs(duration.toDays());
+		
+		if(diff >= 30) {
 			time = t;
 			
 			for(Entry<Long, Post> entry : posts.entrySet()) {
-				long diffYearPost = (t.getTime()-entry.getValue().getLastUpdate().getTime())/(24 * 60 * 60 * 1000 * 365);
-				if(diffYearPost>=1) {
+				Duration durationPost = Duration.between(t.toLocalDateTime(), entry.getValue().getLastUpdate().toLocalDateTime());
+				long diffPost = Math.abs(durationPost.toDays());
+				if(diffPost>=30) {
 					ids.add(entry.getKey());
 				}
 			}
@@ -216,6 +208,16 @@ public class Data3 {
 			}
 			lock.writeUnLock();
 		}
+	}
 
+	public static void clearData() {
+		posts.clear();
+		comments.clear();
+		indexCP.clear();
+		bestPosts.clear();
+		bestPosts.add(null);
+		bestPosts.add(null);
+		bestPosts.add(null);
+		
 	}
 }

@@ -159,7 +159,6 @@ public class Reader3 implements Runnable{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println(C.getTime());
 				ligneComment = readBuff(buffComments);		
 			}
 			else {
@@ -172,7 +171,6 @@ public class Reader3 implements Runnable{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println(P.getTime());
 				lignePost = readBuff(buffPosts);	
 			}
 		}
@@ -189,7 +187,6 @@ public class Reader3 implements Runnable{
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				System.out.println(C.getTime());
 				ligneComment = readBuff(buffComments);
 			}
 		} else {
@@ -197,7 +194,6 @@ public class Reader3 implements Runnable{
 				Post P = toPost(lignePost.split("\\|"));
 				// M�thode pour envoyer le post dans la chaine principale
 				Data3.addPost(P);
-				System.out.println(P.getTime());
 				try {
 					events.put(new Entree(P.getId(),P.getTime()));
 				} catch (InterruptedException e) {

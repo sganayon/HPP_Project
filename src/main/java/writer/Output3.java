@@ -79,7 +79,6 @@ public class Output3 implements Runnable{
 	public static void write() {
 		StringBuilder output = new StringBuilder();
 		Timestamp t = top.getTime();
-		System.out.println("writing for "+t);
 		
 		output.append(t.toString().replace(" ", "T")+"+0000");
 		

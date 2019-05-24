@@ -15,6 +15,7 @@ import org.junit.Test;
 
 import misc.Const;
 import misc.Data2;
+import misc.Data3;
 import misc.ThreadComputing3;
 import modeles.Entree;
 import modeles.Top;
@@ -79,7 +80,7 @@ public class TestAppThreadMapFMemOpti {
 		
 		BlockingQueue<Entree> events = new ArrayBlockingQueue<Entree>(100);
 		BlockingQueue<Top> tops = new ArrayBlockingQueue<Top>(100);
-		Data2.clearData();
+		Data3.clearData();
 		
 		Thread threadReader = new Thread(new Reader3(PATH,events));
 		threadReader.start();
