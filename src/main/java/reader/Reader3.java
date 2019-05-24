@@ -6,26 +6,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
 import java.sql.Timestamp;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Vector;
-import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import modeles.Comments;
 import modeles.Entree;
-import misc.Data;
-import misc.Data2;
 import misc.Data3;
 import misc.TurnInto;
-import modeles.Comments;
 import modeles.Post;
 
 public class Reader3 implements Runnable{

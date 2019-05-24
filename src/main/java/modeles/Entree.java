@@ -3,8 +3,8 @@ package modeles;
 import java.sql.Timestamp;
 
 public class Entree {
-	private long id;
-	private Timestamp time;
+	protected long id;
+	protected Timestamp time;
 	
 	public Entree(long id, Timestamp time) {
 		super();

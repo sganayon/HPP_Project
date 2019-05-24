@@ -14,7 +14,6 @@ import java.util.concurrent.BlockingQueue;
 import org.junit.Test;
 
 import misc.Const;
-import misc.Data2;
 import misc.Data3;
 import misc.ThreadComputing3;
 import modeles.Entree;

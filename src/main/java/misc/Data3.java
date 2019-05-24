@@ -8,7 +8,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Vector;
 
 import modeles.Comments;
 import modeles.Entree;
@@ -30,7 +29,7 @@ public class Data3 {
 	
 	public static void addPost(Post p) {
 		posts.put(p.getId(), p);
-		removeOldData2(p.getTime());
+		removeOldData(p.getTime());
 	}
 	
 	public static long addComment(Comments c) {
@@ -84,7 +83,7 @@ public class Data3 {
 		for(int i=0;i<3;i++) {
 			if(bestPosts.get(i) != null) {
 				bestPosts.get(i).setScore(getScoreOfPostAt(bestPosts.get(i),e.getTime()));
-				bestPosts.get(i).setNbComm(getNbCommofPostAt(bestPosts.get(i),e.getTime()));
+				bestPosts.get(i).setNbComm(getNbCommOfPostAt(bestPosts.get(i),e.getTime()));
 				if(bestPosts.get(i).getId() == p.getId()) {
 					isAlreadyIn = true;
 				}
@@ -101,7 +100,7 @@ public class Data3 {
 				lock.readUnLock();
 				
 				p0.setScore(scoreOfP);
-				p0.setNbComm(getNbCommofPostAt(p,e.getTime()));
+				p0.setNbComm(getNbCommOfPostAt(p,e.getTime()));
 				bestPosts.set(0,p0);
 				
 			}else if(bestPosts.get(1) == null || scoreOfP >= bestPosts.get(1).getScore()) {
@@ -112,7 +111,7 @@ public class Data3 {
 				lock.readUnLock();
 				
 				p0.setScore(scoreOfP);
-				p0.setNbComm(getNbCommofPostAt(p,e.getTime()));
+				p0.setNbComm(getNbCommOfPostAt(p,e.getTime()));
 				bestPosts.set(1,p0);
 				
 			}else if(bestPosts.get(2) == null || scoreOfP >= bestPosts.get(2).getScore()) {
@@ -121,14 +120,14 @@ public class Data3 {
 				lock.readUnLock();
 				
 				p0.setScore(scoreOfP);
-				p0.setNbComm(getNbCommofPostAt(p,e.getTime()));
+				p0.setNbComm(getNbCommOfPostAt(p,e.getTime()));
 				bestPosts.set(2,p0);
 			}
 		}
 		
 		for(int i=0; i<3;i++) {
 			if(bestPosts.get(i) == null) {
-				bestPosts.set(i,new Post(null,-1,"uer",-i-1,new ArrayList<Comments>()));
+				bestPosts.set(i,new Post(null,-1,"uer",-i-1));
 			}
 		}
 		Collections.sort(bestPosts);
@@ -162,7 +161,7 @@ public class Data3 {
 		return scoreTot;
 	}
 
-	public static int getNbCommofPostAt(Post p, Timestamp t) {
+	public static int getNbCommOfPostAt(Post p, Timestamp t) {
 		List<Comments> lst = comments.get(p.getId());
 		if(lst != null){
 			lock.readLock();
@@ -175,7 +174,7 @@ public class Data3 {
 		
 	}
 
-	public static void removeOldData2(Timestamp t) {
+	public static void removeOldData(Timestamp t) {
 		List<Long> ids = new ArrayList<Long>();
 		if(time == null) {
 			time = t;
@@ -185,13 +184,14 @@ public class Data3 {
 		Duration duration = Duration.between(t.toLocalDateTime(), time.toLocalDateTime());
 		long diff = Math.abs(duration.toDays());
 		
+		//30j pour pas suppr trop souvent, ont suppr par rapport au last event d'un post donc pas forcement tt 10j
 		if(diff >= 30) {
 			time = t;
 			
 			for(Entry<Long, Post> entry : posts.entrySet()) {
 				Duration durationPost = Duration.between(t.toLocalDateTime(), entry.getValue().getLastUpdate().toLocalDateTime());
 				long diffPost = Math.abs(durationPost.toDays());
-				if(diffPost>=30) {
+				if(diffPost>=30) { //ici le last event doit dater du mois dernier (10j suffisent etudier impact) !!!! 
 					ids.add(entry.getKey());
 				}
 			}
