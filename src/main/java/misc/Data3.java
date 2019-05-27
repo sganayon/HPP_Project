@@ -44,6 +44,12 @@ public class Data3 {
 				lst.add(c);
 				comments.put(c.getPostId(),lst);
 			}
+			if(!posts.containsKey(c.getPostId())) {
+				System.out.println("no post for that comment");
+			}else {
+				posts.get(c.getPostId()).setLastUpdate(c.getTime());
+			}
+			
 			lock.writeUnLock();
 			indexCP.put(c.getId(),c.getPostId());
 			return c.getPostId();
@@ -51,6 +57,11 @@ public class Data3 {
 			List<Comments> lst = comments.get(indexCP.get(c.getRepId()));
 			lock.writeLock();
 			lst.add(c);
+			if(!posts.containsKey(lst.get(0).getPostId())) {
+				System.out.println("no post for that comment");
+			}else {
+				posts.get(lst.get(0).getPostId()).setLastUpdate(c.getTime());
+			}
 			lock.writeUnLock();
 			indexCP.put(c.getId(),lst.get(0).getPostId());
 			return lst.get(0).getPostId();

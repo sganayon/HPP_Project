@@ -34,7 +34,9 @@ public class App {
 
 	threadWriter.join();
 	long fin = System.nanoTime();
-	long time = (fin -deb)/1000000000;
-	System.out.println("execution time : "+time+"s");
+	long Totalsecondes = (fin -deb)/1000000000;
+	int min = (int) Totalsecondes/60;
+	int sec = (int) Totalsecondes - min*60;
+	System.out.println("execution time : "+min+" min "+sec+" sec.");
 	}
 }

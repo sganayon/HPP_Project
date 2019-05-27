@@ -7,6 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.sql.Timestamp;
+import java.time.Duration;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.concurrent.BlockingQueue;
 
 import modeles.Comments;
@@ -134,10 +137,20 @@ public class Reader3 implements Runnable{
 			String[] motsPosts = lignePost.split("\\|");
 			String[] motsComments = ligneComment.split("\\|");
 
-			//compare the timestamp and add the older to the Data class, then read the next line
-			if (TurnInto.timeStamp(motsPosts[0]).after(TurnInto.timeStamp(motsComments[0]))) {
+			Calendar cp = TurnInto.date(motsPosts[0]);
+			Calendar cc = TurnInto.date(motsComments[0]);
+			
+			Duration duration = Duration.between(cp.toInstant(), cc.toInstant());
+			
+			//compare the date and add the older to the Data class, then read the next line
+			if (duration.isNegative()) {
 				
 				Comments C = toComment(motsComments);
+//				if(C.getPostId() == Long.valueOf("962098904011")) {
+//					
+//					System.out.println();
+//				}
+				
 				// M�thode pour envoyer le commentaire dans la chaine principale
 				long id = Data3.addComment(C);
 				try {
